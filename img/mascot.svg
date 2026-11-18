@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="40%" r="65%">
+      <stop offset="0" stop-color="#FFF4FB"/><stop offset="1" stop-color="#FFD6EC"/>
+    </radialGradient>
+    <linearGradient id="fur" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFE9C7"/><stop offset="1" stop-color="#FFC98F"/>
+    </linearGradient>
+    <linearGradient id="bow" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FF8FC7"/><stop offset="1" stop-color="#B98CFF"/>
+    </linearGradient>
+  </defs>
+  <rect width="200" height="200" fill="url(#bg)"/>
+  <!-- sparkles -->
+  <g fill="#FFD84D">
+    <path d="M30 40 l3 9 9 3 -9 3 -3 9 -3 -9 -9 -3 9 -3z"/>
+    <path d="M172 150 l2 6 6 2 -6 2 -2 6 -2 -6 -6 -2 6 -2z"/>
+  </g>
+  <g fill="#B9A2FF"><path d="M165 38 l2 6 6 2 -6 2 -2 6 -2 -6 -6 -2 6 -2z"/></g>
+  <!-- body -->
+  <ellipse cx="100" cy="196" rx="62" ry="36" fill="url(#fur)" stroke="#5B3B53" stroke-width="4"/>
+  <!-- ears -->
+  <path d="M42 92 L50 30 L92 62 Z" fill="url(#fur)" stroke="#5B3B53" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M158 92 L150 30 L108 62 Z" fill="url(#fur)" stroke="#5B3B53" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M54 76 L57 44 L80 62 Z" fill="#FF9FCB"/>
+  <path d="M146 76 L143 44 L120 62 Z" fill="#FF9FCB"/>
+  <!-- head -->
+  <ellipse cx="100" cy="106" rx="66" ry="56" fill="url(#fur)" stroke="#5B3B53" stroke-width="4"/>
+  <!-- stripes -->
+  <path d="M92 54 q8 10 0 20 M108 54 q-8 10 0 20 M100 52 v18" stroke="#F0A55E" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <!-- eyes -->
+  <g>
+    <ellipse cx="74" cy="104" rx="13" ry="16" fill="#3B2A4A"/>
+    <ellipse cx="126" cy="104" rx="13" ry="16" fill="#3B2A4A"/>
+    <circle cx="78" cy="98" r="5.5" fill="#fff"/><circle cx="130" cy="98" r="5.5" fill="#fff"/>
+    <circle cx="70" cy="111" r="2.5" fill="#fff"/><circle cx="122" cy="111" r="2.5" fill="#fff"/>
+    <path d="M66 116 q8 4 16 0" stroke="#8C7CFF" stroke-width="2.5" fill="none" opacity=".7"/>
+    <path d="M118 116 q8 4 16 0" stroke="#8C7CFF" stroke-width="2.5" fill="none" opacity=".7"/>
+  </g>
+  <!-- blush -->
+  <ellipse cx="56" cy="128" rx="12" ry="7" fill="#FF8FB8" opacity=".6"/>
+  <ellipse cx="144" cy="128" rx="12" ry="7" fill="#FF8FB8" opacity=".6"/>
+  <!-- nose & mouth -->
+  <path d="M94 121 h12 l-6 7 z" fill="#FF7FAF" stroke="#5B3B53" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M100 128 q-5 9 -12 5 M100 128 q5 9 12 5" stroke="#5B3B53" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <!-- whiskers -->
+  <g stroke="#5B3B53" stroke-width="2.5" stroke-linecap="round">
+    <path d="M40 118 l-22 -4 M40 126 l-22 4"/><path d="M160 118 l22 -4 M160 126 l22 4"/>
+  </g>
+  <!-- bow -->
+  <g transform="translate(140 62) rotate(18)">
+    <path d="M0 0 L-24 -14 L-24 14 Z" fill="url(#bow)" stroke="#5B3B53" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M0 0 L24 -14 L24 14 Z" fill="url(#bow)" stroke="#5B3B53" stroke-width="3" stroke-linejoin="round"/>
+    <circle r="7" fill="#FFD84D" stroke="#5B3B53" stroke-width="3"/>
+  </g>
+</svg>
