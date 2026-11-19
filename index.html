@@ -1,4 +1,3 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><style>.vtown-head{display:block}.town-title{display:flex;align-items:center;gap:clamp(6px,1vw,14px);min-width:0}.town-title h2{word-break:keep-all}.town-title .vtown-cat{width:clamp(108px,16vw,216px);height:clamp(108px,16vw,216px);object-fit:contain;flex:none}@media(max-width:390px){.town-title h2{font-size:24px}.vtown-txt{column-gap:8px}}</style></head><body>
 <!doctype html>
 <html lang="ko">
 <head>
@@ -60,10 +59,10 @@
 .mobile-list{display:none}.teacher-area{max-width:1100px;margin:16px auto;padding:0 14px;color:#46365e}.teacher-area details{background:#fffdfef0;padding:12px 18px;border-radius:15px}.teacher-area summary{cursor:pointer;font-family:var(--display)}
 @media(max-width:700px){.poster{overflow:hidden}.poster-img{min-width:700px;width:700px;max-width:none;position:relative;left:50%;transform:translateX(-50%)}.poster .map-hit{display:none}.mobile-list{display:block;padding:18px 12px}.mobile-list h2{text-align:center;font:26px var(--display);color:#503668;margin-bottom:16px}.mobile-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.mobile-game{border:3px solid white;border-radius:19px;background:#fff7ff;overflow:hidden;padding:0;text-align:left;box-shadow:0 4px 0 #c6a6ff;cursor:pointer;color:#34244a}.mobile-game img{width:100%;height:105px;object-fit:cover;display:block}.mobile-game span{display:block;padding:7px 10px 10px}.mobile-game b{display:block;font:18px var(--display)}.mobile-game small{font-size:12px}.live-panel{margin:8px 10px;font-size:16px}}
 </style>
-<title>냥코 크롬북 놀이터</title>
+<title>냥코놀이터</title>
 <meta name="description" content="초등 2학년이 크롬북 터치스크린, 키보드, 한글 두벌식 자판을 놀이로 익히는 놀이터예요. 참치를 모아 스티커를 뽑아요!">
 <meta name="theme-color" content="#FFB8DD">
-<meta property="og:title" content="냥코 크롬북 놀이터">
+<meta property="og:title" content="냥코놀이터">
 <meta property="og:description" content="터치·키보드·한글 자판을 놀면서 배워요.">
 <meta property="og:image" content="img/nyang_1.png">
 <link rel="icon" href="img/nyang_1.png" type="image/svg+xml">
@@ -823,7 +822,16 @@ html{scroll-behavior:auto}
   .vtown .card:hover .art::after,.vtown .card:hover .spark{animation:none}
 }
 </style>
-<style>.vtown-head{display:block}.town-title{display:flex;align-items:center;gap:clamp(6px,1vw,14px);min-width:0}.town-title h2{word-break:keep-all}.town-title .vtown-cat{width:clamp(108px,16vw,216px);height:clamp(108px,16vw,216px);object-fit:contain;flex:none}@media(max-width:390px){.town-title h2{font-size:24px}.vtown-txt{column-gap:8px}}</style></head>
+<style>.vtown-head{display:block}.town-title{display:flex;align-items:center;gap:clamp(6px,1vw,14px);min-width:0}.town-title h2{word-break:keep-all}.town-title .vtown-cat{width:clamp(108px,16vw,216px);height:clamp(108px,16vw,216px);object-fit:contain;flex:none}@media(max-width:390px){.town-title h2{font-size:24px}.vtown-txt{column-gap:8px}}
+/* 키보드 연주: 악기 고르기 */
+.instrs{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:10px;border-radius:18px;background:#F7F1FF}
+.instBtn{display:inline-flex;align-items:center;gap:6px;min-height:46px;font-size:18px}
+.instBtn small{display:inline-grid;place-items:center;min-width:20px;height:20px;border-radius:6px;background:#EEE6FA;color:var(--ink2);font-family:var(--body);font-size:12px}
+.instBtn.on{background:linear-gradient(135deg,#FFE27A,#FFB8DD);border-color:var(--ink)}
+.instBtn.on small{background:#fff}
+.piano[data-instr="drum"] .pkey b{font-size:clamp(18px,3vw,28px)}
+@media(max-width:560px){.instBtn{font-size:15px;padding:5px 11px}}
+</style></head>
 <body>
 <div class="glitter" aria-hidden="true" id="glitter"></div>
 <div class="ruler" aria-hidden="true"></div>
@@ -841,7 +849,7 @@ html{scroll-behavior:auto}
  <header class="vhero" id="top">
   <div class="vhero-txt">
    <span class="vbadge">💻 크롬북 터치판</span>
-   <h1>냥코 크롬북 놀이터</h1>
+   <h1>냥코놀이터</h1>
    <p>놀이를 하면 <b>참치</b>가 모여요. 참치로 스티커를 뽑아 도감을 채워 봐요!</p>
    <div class="vhero-btns">
     <a class="vbtn go" href="#town-click">🐾 놀이 시작하기</a>
@@ -878,8 +886,8 @@ html{scroll-behavior:auto}
   <div class="cards" data-town="han"></div>
  </div></section>
 
- <footer class="vfoot"><div class="teacher-area"><details><summary>선생님 안내 및 학습 기록 초기화</summary><p>터치 마을과 밀기 마을은 화면을 만져요. 키보드·한글 마을은 크롬북 노트북 모드에서 사용해요. 학습 기록은 이 브라우저에 저장됩니다.</p><button type="button" id="resetBtn">참치·스티커·단계 모두 지우기</button></details></div>
-
+ <footer class="vfoot"><div class="teacher-area"><details><summary>선생님 안내 및 학습 기록 초기화</summary><p>터치 마을과 밀기 마을은 화면을 만져요. 키보드·한글 마을은 크롬북 노트북 모드에서 사용해요. 학습 기록은 이 브라우저에 저장됩니다.</p><button type="button" id="resetBtn">참치·스티커·단계 모두 지우기</button></details></div></footer>
+</main>
 
 <main id="stage" class="wrap" hidden>
   <div class="stagebar">
@@ -934,6 +942,52 @@ function tone(f, d, type = 'sine', vol = .15, delay = 0, f2) {
   g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(.0001, t + d);
   o.connect(g).connect(a.destination); o.start(t); o.stop(t + d + .03);
 }
+/* ================= 키보드 연주: 악기 8가지 (소리 파일 없이 브라우저에서 합성) ================= */
+const DRUM_PARTS = [['쿵', '큰북'], ['탁', '작은북'], ['칙', '하이햇'], ['치익', '열린 하이햇'], ['통', '높은 탐'], ['퉁', '가운데 탐'], ['둥', '낮은 탐'], ['챙', '심벌즈']];
+const MUSIC = (() => {
+  let noise = null; const ks = {};
+  const master = a => a._nyMaster || (a._nyMaster = (() => { const c = a.createDynamicsCompressor(), g = a.createGain(); g.gain.value = .9; g.connect(c); c.connect(a.destination); return g; })());
+  const noiseBuf = a => { if (noise && noise.sampleRate === a.sampleRate) return noise; const b = a.createBuffer(1, a.sampleRate * 1.5, a.sampleRate), d = b.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1; return noise = b; };
+  // 줄을 튕기는 소리 (카플러스-스트롱): 기타·하프
+  const pluck = (a, f, dur, damp, soft) => {
+    const key = [f.toFixed(2), dur, damp, soft, a.sampleRate].join('|'); if (ks[key]) return ks[key];
+    const sr = a.sampleRate, n = Math.floor(sr * dur), b = a.createBuffer(1, n, sr), d = b.getChannelData(0), P = Math.max(2, Math.round(sr / f)), w = new Float32Array(P);
+    for (let i = 0; i < P; i++) w[i] = Math.random() * 2 - 1;
+    for (let s = 0; s < soft; s++) for (let i = 1; i < P; i++) w[i] = (w[i] + w[i - 1]) * .5;
+    let p = 0; for (let i = 0; i < n; i++) { const q = (p + 1) % P, v = w[p]; d[i] = v; w[p] = damp * .5 * (v + w[q]); p = q; }
+    return ks[key] = b;
+  };
+  const gain = (a, dest) => { const g = a.createGain(); g.gain.value = 0; g.connect(dest); return g; };
+  const env = (g, t, atk, peak, hold, rel) => { g.gain.setValueAtTime(.0001, t); g.gain.linearRampToValueAtTime(peak, t + atk); g.gain.setValueAtTime(peak, t + atk + hold); g.gain.exponentialRampToValueAtTime(.0001, t + atk + hold + rel); return t + atk + hold + rel + .05; };
+  const osc = (a, type, f, t, end, dest, detune = 0) => { const o = a.createOscillator(); o.type = type; o.frequency.setValueAtTime(f, t); o.detune.value = detune; o.connect(dest); o.start(t); o.stop(end); return o; };
+  const vib = (a, o, t, end, rate, depth, delay) => { const l = a.createOscillator(), lg = a.createGain(); l.frequency.value = rate; lg.gain.setValueAtTime(0, t); lg.gain.linearRampToValueAtTime(depth, t + delay); l.connect(lg).connect(o.frequency); l.start(t); l.stop(end); };
+  const filt = (a, type, f, q, dest) => { const b = a.createBiquadFilter(); b.type = type; b.frequency.value = f; if (q) b.Q.value = q; b.connect(dest); return b; };
+  const nz = (a, t, dur, dest) => { const s = a.createBufferSource(); s.buffer = noiseBuf(a); s.connect(dest); s.start(t); s.stop(t + dur); };
+  const buf = (a, b, t, dest) => { const s = a.createBufferSource(); s.buffer = b; s.connect(dest); s.start(t); };
+  const DRUMS = [
+    (a, t, m) => { const g = gain(a, m), o = osc(a, 'sine', 150, t, t + .45, g); o.frequency.exponentialRampToValueAtTime(42, t + .3); env(g, t, .002, .8, .02, .38); },
+    (a, t, m) => { const g = gain(a, m); env(g, t, .001, .55, 0, .18); nz(a, t, .25, filt(a, 'highpass', 1200, 0, g)); const g2 = gain(a, m); env(g2, t, .001, .3, 0, .1); osc(a, 'triangle', 190, t, t + .2, g2); },
+    (a, t, m) => { const g = gain(a, m); env(g, t, .001, .32, 0, .05); nz(a, t, .1, filt(a, 'highpass', 7000, 0, g)); },
+    (a, t, m) => { const g = gain(a, m); env(g, t, .001, .26, .02, .32); nz(a, t, .45, filt(a, 'highpass', 6500, 0, g)); },
+    ...[262, 190, 135].map(f => (a, t, m) => { const g = gain(a, m), o = osc(a, 'sine', f, t, t + .45, g); o.frequency.exponentialRampToValueAtTime(f * .62, t + .3); env(g, t, .002, .75, .01, .34); }),
+    (a, t, m) => { const g = gain(a, m); env(g, t, .002, .3, .05, 1.4); nz(a, t, 1.6, filt(a, 'highpass', 4500, 0, g)); },
+  ];
+  const LIST = [
+    { id: 'piano', e: '🎹', n: '피아노', play(a, f, t, m) { const g = gain(a, m); osc(a, 'triangle', f, t, env(g, t, .005, .3, 0, .9), g); const g2 = gain(a, m); osc(a, 'sine', f * 2, t, env(g2, t, .005, .06, 0, .4), g2); } },
+    { id: 'violin', e: '🎻', n: '바이올린', play(a, f, t, m) { const g = gain(a, m), end = env(g, t, .12, .12, .45, .35), lp = filt(a, 'lowpass', 3000, 1, g);
+      [-6, 6].forEach(dt => vib(a, osc(a, 'sawtooth', f, t, end, lp, dt), t, end, 5.6, f * .012, .2)); } },
+    { id: 'guitar', e: '🎸', n: '기타', play(a, f, t, m) { const g = gain(a, m); env(g, t, .002, .55, .6, 1); buf(a, pluck(a, f, 1.7, .996, 3), t, filt(a, 'lowpass', 3200, 0, g)); } },
+    { id: 'xylo', e: '🌈', n: '실로폰', play(a, f, t, m) { const F = f * 2, g = gain(a, m); osc(a, 'sine', F, t, env(g, t, .002, .34, 0, .4), g); const g2 = gain(a, m); osc(a, 'sine', F * 3.93, t, env(g2, t, .001, .07, 0, .07), g2); const g3 = gain(a, m); env(g3, t, .001, .06, 0, .02); nz(a, t, .03, filt(a, 'bandpass', 3000, 1, g3)); } },
+    { id: 'kalimba', e: '🎐', n: '칼림바', play(a, f, t, m) { const F = f * 2, g = gain(a, m); osc(a, 'sine', F, t, env(g, t, .003, .3, 0, 1.3), g); const g2 = gain(a, m); osc(a, 'sine', F * 5.4, t, env(g2, t, .001, .06, 0, .09), g2); const g3 = gain(a, m); osc(a, 'triangle', F, t, env(g3, t, .002, .05, 0, .3), g3); } },
+    { id: 'drum', e: '🥁', n: '드럼', play(a, f, t, m, i) { DRUMS[i](a, t, m); } },
+    { id: 'sax', e: '🎷', n: '색소폰', play(a, f, t, m) { const g = gain(a, m), end = env(g, t, .06, .13, .38, .25), lp = filt(a, 'lowpass', 900, 2, g);
+      lp.frequency.setValueAtTime(900, t); lp.frequency.linearRampToValueAtTime(2300, t + .12); lp.frequency.linearRampToValueAtTime(1600, end);
+      vib(a, osc(a, 'sawtooth', f, t, end, lp), t, end, 5, f * .01, .25); const sq = gain(a, lp); sq.gain.value = .5; vib(a, osc(a, 'square', f, t, end, sq), t, end, 5, f * .01, .25);
+      const b = gain(a, m); env(b, t, .03, .02, .05, .1); nz(a, t, .25, filt(a, 'bandpass', f * 3, 1, b)); } },
+    { id: 'harp', e: '🎼', n: '하프', play(a, f, t, m) { const g = gain(a, m); env(g, t, .002, .5, 1, 1.6); buf(a, pluck(a, f, 2.7, .998, 1), t, g); const g2 = gain(a, m); osc(a, 'sine', f * 2, t, env(g2, t, .004, .035, 0, 1.2), g2); } },
+  ];
+  return { LIST, play(id, f, i) { if (DATA.mute) return; const a = ac(); if (!a) return; const I = LIST.find(x => x.id === id) || LIST[0]; try { I.play(a, f, a.currentTime + .005, master(a), i); } catch (e) {} } };
+})();
 const sfx = {
   pop() { tone(520, .12, 'triangle', .22, 0, 1400); tone(1800, .05, 'square', .04, .01); },
   ok() { tone(660, .09, 'sine', .16); tone(990, .14, 'sine', .16, .08); },
@@ -1699,21 +1753,34 @@ const GAMES = [
   } },
 
 /* ---- 15. keys: piano ---- */
-{ id: 'piano', town: 'key', title: '키보드 피아노', skill: '가운뎃줄 키', color: 'var(--grape)', r: 1.1, keys: true,
-  desc: '가운뎃줄 키가 피아노 건반이 돼요. 반짝이는 키를 따라 동요를 연주해요.',
-  how: ['왼손은 <b>ㅁ ㄴ ㅇ ㄹ</b>, 오른손은 <b>ㅎ ㅗ ㅓ ㅏ</b> 위에 올려요.', '<b>ㅁ</b>부터 차례로 도 레 미 파 솔 라 시 도 소리가 나요.', '반짝이는 키를 따라 노래 한 곡을 끝까지 연주해요.'],
+{ id: 'piano', town: 'key', title: '키보드 연주', skill: '가운뎃줄 키', color: 'var(--grape)', r: 1.1, keys: true,
+  desc: '가운뎃줄 키가 악기가 돼요. 피아노·바이올린·기타·드럼 등 8가지 악기로 동요를 연주해요.',
+  how: ['왼손은 <b>ㅁ ㄴ ㅇ ㄹ</b>, 오른손은 <b>ㅎ ㅗ ㅓ ㅏ</b> 위에 올려요.', '<b>ㅁ</b>부터 차례로 도 레 미 파 솔 라 시 도 소리가 나요.', '<b>악기</b>를 골라요. 숫자 키 <b>1~8</b>로도 바꿀 수 있어요.', '반짝이는 키를 따라 노래 한 곡을 끝까지 연주해요.'],
   run(c) {
     c.grabAll = true;
+    let instr = MUSIC.LIST.some(x => x.id === DATA.instr) ? DATA.instr : 'piano';
+    const isDrum = () => instr === 'drum';
+    const label = i => isDrum() ? DRUM_PARTS[i][0] : NOTES[i][1];
+    const ro = w => { const j = (w.charCodeAt(w.length - 1) - 0xAC00) % 28; return w + (j > 0 && j !== 8 ? '으로' : '로'); };
     const NOTES = [['KeyA','도',261.63,'#FF8FA3'],['KeyS','레',293.66,'#FFB36B'],['KeyD','미',329.63,'#FFD95A'],['KeyF','파',349.23,'#8FDB7A'],['KeyG','솔',392,'#5CCFC0'],['KeyH','라',440,'#6CB8FF'],['KeyJ','시',493.88,'#A98BFF'],['KeyK','높은 도',523.25,'#FF9EE0']];
     const SONGS = { '학교종': '솔솔라라솔솔미 솔솔미미레 솔솔라라솔솔미 솔미레미도', '비행기': '미레도레미미미 레레레 미솔솔 미레도레미미미 레레미레도', '나비야': '솔미미 파레레 도레미파솔솔솔 솔미미미 파레레 도미솔솔미미미' };
     let song = '학교종', seq = [], idx = 0, miss = 0, freeMode = false;
-    const say = sayBox('반짝이는 건반을 따라 연주해요. 키보드의 <b>가운뎃줄</b>을 써요!'), songs = el('div', 'songs'), sheet = el('div', 'sheetm'), piano = el('div', 'piano');
-    c.body.append(say, songs, sheet, piano);
+    const say = sayBox('먼저 <b>악기</b>를 골라요. 그다음 반짝이는 건반을 따라 연주해요!'), instrs = el('div', 'instrs'), songs = el('div', 'songs'), sheet = el('div', 'sheetm'), piano = el('div', 'piano');
+    c.body.append(say, instrs, songs, sheet, piano);
     const keys = NOTES.map(([code, name, f, col]) => { const k = el('div', 'pkey', `<b>${name}</b><span class="jm">${HMAP[code][0]}</span><small>${code.slice(3)}</small>`); k.style.setProperty('--nc', col); k.addEventListener('pointerdown', () => play(code)); piano.append(k); return k; });
-    const hud = () => c.hud(freeMode ? chip('🎹', '자유롭게 치기') : chip('🎵', `${idx} / ${seq.length}`) + chip('🙈', `틀림 ${miss}`));
+    const curI = () => MUSIC.LIST.find(x => x.id === instr);
+    const hud = () => c.hud(chip(curI().e, curI().n) + (freeMode ? chip('🎶', '자유롭게 치기') : chip('🎵', `${idx} / ${seq.length}`) + chip('🙈', `틀림 ${miss}`)));
+    MUSIC.LIST.forEach((x, n) => { const b = el('button', 'songBtn instBtn', `${x.e} ${x.n}<small>${n + 1}</small>`); b.type = 'button'; b.dataset.i = x.id; b.addEventListener('click', () => { b.blur(); setInstr(x.id, true); }); instrs.append(b); });
+    function setInstr(id, announce) {
+      instr = id; DATA.instr = id; persist(); piano.dataset.instr = id;
+      [...instrs.children].forEach(b => b.classList.toggle('on', b.dataset.i === id));
+      keys.forEach((k, i) => { k.querySelector('b').textContent = label(i); k.querySelector('small').textContent = isDrum() ? DRUM_PARTS[i][1] : NOTES[i][0].slice(3); });
+      drawSheet();
+      if (announce) { const I = curI(); say.set(`${I.e} <b>${I.n}</b> 소리로 바뀌었어요!${isDrum() ? ' 건반마다 다른 북 소리가 나요.' : ''}`); MUSIC.play(id, NOTES[4][2], 4); }
+    }
     const drawSheet = () => {
       if (freeMode) { sheet.innerHTML = '<span style="min-width:auto;padding:0 14px;border:0;background:none">마음대로 쳐 보세요! 별은 노래를 고르면 받을 수 있어요.</span>'; keys.forEach(k => k.classList.remove('next')); hud(); return; }
-      let n = 0; sheet.innerHTML = [...SONGS[song]].map(ch => { if (ch === ' ') return '<i class="gap"></i>'; const i = n++, N = NOTES[seq[i]]; return `<span class="${i < idx ? 'done' : i === idx ? 'cur' : ''}" style="--nc:${N[3]}">${N[1]}<small>${HMAP[N[0]][0]}</small></span>`; }).join('');
+      let n = 0; sheet.innerHTML = [...SONGS[song]].map(ch => { if (ch === ' ') return '<i class="gap"></i>'; const i = n++, N = NOTES[seq[i]]; return `<span class="${i < idx ? 'done' : i === idx ? 'cur' : ''}" style="--nc:${N[3]}">${label(seq[i])}<small>${HMAP[N[0]][0]}</small></span>`; }).join('');
       keys.forEach((k, i) => k.classList.toggle('next', idx < seq.length && i === seq[idx])); hud();
     };
     const setSong = name => {
@@ -1725,14 +1792,18 @@ const GAMES = [
     function play(code) {
       const i = NOTES.findIndex(n => n[0] === code); if (i < 0 || !c.alive) return false;
       const k = keys[i]; k.classList.remove('dn'); void k.offsetWidth; k.classList.add('dn'); setTimeout(() => k.classList.remove('dn'), 180);
-      tone(NOTES[i][2], .7, 'triangle', .22); tone(NOTES[i][2] * 2, .35, 'sine', .04);
+      MUSIC.play(instr, NOTES[i][2], i);
       if (freeMode || idx >= seq.length) return true;
-      if (i === seq[idx]) { idx++; drawSheet(); if (idx === seq.length) { say.set(`<b>${song}</b> 연주 끝! 짝짝짝!`); c.later(() => c.done(miss <= 2 ? 3 : miss <= 6 ? 2 : 1, `'${song}'을 끝까지 연주했어요! (틀린 음 ${miss}개)`), 900); } }
-      else { miss++; hud(); const N = NOTES[seq[idx]]; say.set(`다음 음은 <b>${N[1]}</b>, <b>${HMAP[N[0]][0]}</b> 키예요.`); }
+      if (i === seq[idx]) { idx++; drawSheet(); if (idx === seq.length) { say.set(`${curI().e} <b>${song}</b> 연주 끝! 짝짝짝!`); c.later(() => c.done(miss <= 2 ? 3 : miss <= 6 ? 2 : 1, `${ro(curI().n)} '${song}'을 끝까지 연주했어요! (틀린 음 ${miss}개)`), 900); } }
+      else { miss++; hud(); const N = NOTES[seq[idx]]; say.set(`다음은 <b>${label(seq[idx])}</b>, <b>${HMAP[N[0]][0]}</b> 키예요.`); }
       return true;
     }
-    c.key = (e, code) => { if (e.repeat) return; if (!play(code)) say.set('피아노 건반은 가운뎃줄 <b>ㅁ ㄴ ㅇ ㄹ ㅎ ㅗ ㅓ ㅏ</b> 키예요.'); };
-    setSong('학교종');
+    c.key = (e, code) => {
+      if (e.repeat) return;
+      const d = /^(Digit|Numpad)([1-8])$/.exec(code); if (d) { setInstr(MUSIC.LIST[+d[2] - 1].id, true); return; }
+      if (!play(code)) say.set('연주 건반은 가운뎃줄 <b>ㅁ ㄴ ㅇ ㄹ ㅎ ㅗ ㅓ ㅏ</b> 키예요. 숫자 <b>1~8</b>은 악기를 바꿔요.');
+    };
+    setSong('학교종'); setInstr(instr, false);
   } },
 
 /* ---- 16. hangul: key positions ---- */
@@ -2738,5 +2809,3 @@ renderHome();
 </script>
 </body>
 </html>
-
-</body></html>
