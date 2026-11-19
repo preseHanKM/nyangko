@@ -829,8 +829,48 @@ html{scroll-behavior:auto}
 .instBtn small{display:inline-grid;place-items:center;min-width:20px;height:20px;border-radius:6px;background:#EEE6FA;color:var(--ink2);font-family:var(--body);font-size:12px}
 .instBtn.on{background:linear-gradient(135deg,#FFE27A,#FFB8DD);border-color:var(--ink)}
 .instBtn.on small{background:#fff}
-.piano[data-instr="drum"] .pkey b{font-size:clamp(18px,3vw,28px)}
-@media(max-width:560px){.instBtn{font-size:15px;padding:5px 11px}}
+/* 키보드 연주: 피아노 한 줄, 흰건반 15개 (낮은 파 ~ 높은 파) */
+.pianoW{width:100%;max-width:1000px;margin-inline:auto;padding:12px clamp(8px,1.6vw,18px) clamp(14px,2vw,22px);border-radius:22px 22px 26px 26px;background:linear-gradient(180deg,#5B3E7E,#3E2A5C);box-shadow:0 8px 0 #2C1D42,0 14px 28px rgba(60,30,90,.3)}
+.pbands{display:flex;gap:0;margin-bottom:8px;font-family:var(--display);font-size:clamp(11px,1.5vw,15px);text-align:center}
+.pbands span{min-width:0;padding:3px 4px;border-radius:999px;margin:0 3px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pbands .o0{background:#4F8FE0}.pbands .o1{background:#9A6CF0}.pbands .o2{background:#E0559A}
+.pbed{display:flex;border-top:7px solid #C2405E;border-radius:4px 4px 14px 14px;overflow:hidden;background:#2C1D42;gap:2px;padding:0 0 0}
+.pianoW .pkey{flex:1 1 0;min-width:0;height:clamp(150px,30vh,240px);padding:0 0 clamp(8px,1.4vh,14px);gap:3px;border:0;border-radius:0 0 10px 10px;background:linear-gradient(180deg,#F4F1F8 0,#fff 14%,#fff 86%,#ECE6F2 100%);box-shadow:inset 0 -6px 0 #DCD3E6;justify-content:flex-end}
+.pianoW .pkey::before{content:'';width:clamp(10px,1.4vw,14px);aspect-ratio:1;border-radius:50%;background:var(--nc);margin-bottom:auto;margin-top:clamp(10px,2vh,18px);opacity:.9}
+.pianoW .pkey b{font-size:clamp(13px,2vw,22px);line-height:1.1}
+.pianoW .pkey .jm{width:clamp(20px,3.2vw,34px);font-size:clamp(13px,2vw,21px);border-radius:7px}
+.pianoW .pkey small{font-size:clamp(8px,1vw,11px);line-height:1.1;min-height:1.1em;white-space:nowrap;color:#9A86B4}
+.pianoW .pkey[data-o="0"] small{color:#4F8FE0}.pianoW .pkey[data-o="2"] small{color:#E0559A}
+.pianoW .pkey.octStart{margin-left:3px}
+.pianoW .pkey.dn{background:linear-gradient(180deg,color-mix(in srgb,var(--nc) 40%,#fff),color-mix(in srgb,var(--nc) 75%,#fff));box-shadow:inset 0 -2px 0 #DCD3E6;transform:translateY(3px)}
+.pianoW .pkey.next{background:linear-gradient(180deg,#fff,color-mix(in srgb,var(--nc) 45%,#fff));box-shadow:inset 0 -6px 0 var(--nc),inset 0 0 0 3px var(--nc)}
+.pianoW[data-instr="drum"] .pkey b{font-size:clamp(12px,1.8vw,20px)}
+/* 화면 자판 터치 */
+.kb.touchable .k:not(.sp){cursor:pointer;touch-action:none;-webkit-user-select:none;user-select:none}
+.kb.touchable .k:not(.sp):active{transform:translateY(3px);box-shadow:0 0 0 #AAB4C6;background:#E5DBFF}
+.kb .k.latched{background:#FFE27A!important;box-shadow:0 3px 0 #AAB4C6,0 0 0 3px var(--ink) inset}
+.kbtip{text-align:center;font-size:13px;color:var(--ink2);padding-top:4px}
+.kbtip b{font-family:var(--display);font-weight:400;color:#6A4BE0}
+@media (pointer:coarse){.kb{--u:clamp(34px,6.4vw,52px)}}
+/* 별빛 건반: 놓친 건반은 빨갛게 흔들려요 */
+@keyframes tmiss{0%,100%{transform:none}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.tilesW .pkey.tmiss{animation:tmiss .3s ease;background:linear-gradient(180deg,#FFE3E8,#FFC2CE)}
+/* 별빛 건반 게임 */
+.tilesW{padding-top:clamp(8px,1.4vw,14px)}
+.tstage{border-radius:14px 14px 0 0;overflow:hidden;line-height:0;margin-bottom:0}
+.tstage canvas{display:block;width:100%;touch-action:none;cursor:pointer}
+.tilesW .pbed{border-radius:0 0 14px 14px}
+.tilesW .pkey{height:clamp(110px,20vh,170px)}
+.tilesW .pkey::before{margin-top:clamp(8px,1.4vh,12px)}
+/* 터치로 하는 방향 버튼 · 스페이스바 */
+.akeys.touch{grid-template-columns:repeat(3,clamp(64px,9vw,84px));grid-template-rows:repeat(2,clamp(56px,8vw,72px));gap:8px}
+.akeys.touch .k{cursor:pointer;touch-action:none;font-size:clamp(26px,3.6vw,34px);border:0;border-radius:16px;font-family:var(--display);color:var(--ink);-webkit-user-select:none;user-select:none}
+.akeys.touch .k:active{transform:translateY(3px);box-shadow:0 0 0 #AAB4C6;background:#C9F2C0}
+.maze{touch-action:none}
+.spaceKey{cursor:pointer;touch-action:none;font:inherit;font-family:var(--display);font-size:22px;color:var(--ink);height:68px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;line-height:1.2;-webkit-user-select:none;user-select:none}
+.spaceKey small{font-family:var(--body);font-size:13px;color:var(--ink2)}
+.runWrap{touch-action:none;cursor:pointer}
+@media(max-width:560px){.instBtn{font-size:15px;padding:5px 11px}.pianoW{padding:8px 6px 12px}.pbed{gap:1px}.pianoW .pkey small{display:none}.pianoW .pkey .jm{width:auto;background:none}.pianoW .pkey.octStart{margin-left:2px}}
 </style></head>
 <body>
 <div class="glitter" aria-hidden="true" id="glitter"></div>
@@ -918,7 +958,7 @@ const num = n => n.toLocaleString('ko-KR');
 const ART = { pop: ['🎈', '🎉'], pick: ['🔍', '❓'], doll: ['🪆', '💎'], gift: ['🎁', '🎀'], robot: ['🤖', '✅'], skyup: ['🌈', '☁️'], sea: ['🐠', '🫧'],
   sort: ['🧺', '✏️'], circle: ['⭕', '🖍️'], craft: ['🧪', '✨'], shop: ['🛍️', '🪙'], explore: ['⌨️', '🔎'], maze: ['🐟', '🐾'], jump: ['🐱', '⭐'],
   piano: ['🎹', '🎵'], keys: ['🔤', '💡'], words: ['✏️', '📒'], rain: ['🌧️', '💧'], secret: ['🔐', '💎'] };
-const artOf = g => `<img class="game-illustration" src="img/game_${g.id}.webp" alt="${g.title} 놀이 그림" loading="lazy">`;
+const artOf = g => `<img class="game-illustration" src="${g.art || `img/game_${g.id}.webp`}" alt="${g.title} 놀이 그림" loading="lazy">`;
 
 /* ================= storage ================= */
 const STORE = 'nyangnyang-chromebook-v1';
@@ -954,7 +994,9 @@ const MUSIC = (() => {
     const sr = a.sampleRate, n = Math.floor(sr * dur), b = a.createBuffer(1, n, sr), d = b.getChannelData(0), P = Math.max(2, Math.round(sr / f)), w = new Float32Array(P);
     for (let i = 0; i < P; i++) w[i] = Math.random() * 2 - 1;
     for (let s = 0; s < soft; s++) for (let i = 1; i < P; i++) w[i] = (w[i] + w[i - 1]) * .5;
+    const mean = w.reduce((x, y) => x + y, 0) / P; for (let i = 0; i < P; i++) w[i] -= mean;   // 치우침(DC) 없애기: 딸깍 소리 방지
     let p = 0; for (let i = 0; i < n; i++) { const q = (p + 1) % P, v = w[p]; d[i] = v; w[p] = damp * .5 * (v + w[q]); p = q; }
+    b._rate = (P - .5) / (sr / f);   // 줄 길이를 정수로 반올림한 만큼 재생 속도로 음높이를 맞춰요
     return ks[key] = b;
   };
   const gain = (a, dest) => { const g = a.createGain(); g.gain.value = 0; g.connect(dest); return g; };
@@ -963,7 +1005,7 @@ const MUSIC = (() => {
   const vib = (a, o, t, end, rate, depth, delay) => { const l = a.createOscillator(), lg = a.createGain(); l.frequency.value = rate; lg.gain.setValueAtTime(0, t); lg.gain.linearRampToValueAtTime(depth, t + delay); l.connect(lg).connect(o.frequency); l.start(t); l.stop(end); };
   const filt = (a, type, f, q, dest) => { const b = a.createBiquadFilter(); b.type = type; b.frequency.value = f; if (q) b.Q.value = q; b.connect(dest); return b; };
   const nz = (a, t, dur, dest) => { const s = a.createBufferSource(); s.buffer = noiseBuf(a); s.connect(dest); s.start(t); s.stop(t + dur); };
-  const buf = (a, b, t, dest) => { const s = a.createBufferSource(); s.buffer = b; s.connect(dest); s.start(t); };
+  const buf = (a, b, t, dest) => { const s = a.createBufferSource(); s.buffer = b; if (b._rate) s.playbackRate.value = b._rate; s.connect(dest); s.start(t); };
   const DRUMS = [
     (a, t, m) => { const g = gain(a, m), o = osc(a, 'sine', 150, t, t + .45, g); o.frequency.exponentialRampToValueAtTime(42, t + .3); env(g, t, .002, .8, .02, .38); },
     (a, t, m) => { const g = gain(a, m); env(g, t, .001, .55, 0, .18); nz(a, t, .25, filt(a, 'highpass', 1200, 0, g)); const g2 = gain(a, m); env(g2, t, .001, .3, 0, .1); osc(a, 'triangle', 190, t, t + .2, g2); },
@@ -1133,6 +1175,21 @@ function makeKB(opts = {}) {
     });
     wrap.append(row);
   });
+  // 화면 자판을 손가락으로 눌러도 진짜 키처럼 입력돼요 (태블릿·스마트폰 수업용)
+  // 시프트는 한 번 누르면 다음 글자 하나에 붙어요 → ㄲ ㄸ ㅃ ㅆ ㅉ ㅒ ㅖ
+  let shiftOn = false;
+  const setShift = on => { shiftOn = on; ['ShiftLeft', 'ShiftRight'].forEach(s => keys[s] && keys[s].classList.toggle('latched', on)); wrap.classList.toggle('shifted', on); };
+  wrap.classList.add('touchable');
+  wrap.addEventListener('pointerdown', e => {
+    const k = e.target.closest('.k'); if (!k || k.classList.contains('sp') || !k.dataset.code) return;
+    e.preventDefault(); const code = k.dataset.code;
+    if (!cur || !cur.alive || !cur.key) return;
+    const isShift = code === 'ShiftLeft' || code === 'ShiftRight';
+    cur.key({ repeat: false, shiftKey: isShift ? true : shiftOn, code, key: '', isTrusted: false, preventDefault() {} }, code);
+    if (isShift) setShift(!shiftOn);
+    else if (!/^(Control|Alt|Meta|CapsLock)/.test(code)) setShift(false);
+  });
+  wrap.append(el('div', 'kbtip', '👆 키보드가 없으면 이 화면 자판을 손가락으로 눌러요. <b>시프트</b>를 누른 다음 ㄱ을 누르면 ㄲ!'));
   return {
     el: wrap, keys,
     press(code, ok = true) { const k = keys[code]; if (!k) return; k.classList.remove('down', 'bad'); void k.offsetWidth; k.classList.add(ok ? 'down' : 'bad'); clearTimeout(k._t); k._t = setTimeout(() => k.classList.remove('down', 'bad'), 230); },
@@ -1652,7 +1709,7 @@ const GAMES = [
 /* ---- 13. keys: maze ---- */
 { id: 'maze', town: 'key', title: '참치 모으기', skill: '방향키', color: 'var(--orange)', r: 1.4, keys: true,
   desc: '방향키로 냥냥이를 움직여 참치를 모아요. 모은 참치는 진짜 내 참치!',
-  how: ['키보드 오른쪽 아래의 <b>← ↑ → ↓</b> 키가 방향키예요.', '누르는 쪽으로 냥냥이가 한 칸씩 움직여요.', '책 더미를 피해서 참치를 모두 모아요. 참치 1개 = 🐟 1개!'],
+  how: ['키보드 오른쪽 아래의 <b>← ↑ → ↓</b> 키가 방향키예요.', '키보드가 없으면 화면의 <b>화살표 버튼</b>을 누르거나, 방 그림 위에서 손가락으로 <b>쓱</b> 밀어요.', '책 더미를 피해서 참치를 모두 모아요. 참치 1개 = 🐟 1개!'],
   levels: [['작은 방', '참치 6개'], ['넓은 방', '참치 8개, 책이 많아요'], ['큰 도서관', '참치 12개, 책 미로']],
   run(c) {
     const L = c.level, W = [8, 10, 12][L], H = [6, 7, 8][L], N = [6, 8, 12][L], WALLS = [7, 15, 26][L]; let walls, cheese;
@@ -1665,15 +1722,25 @@ const GAMES = [
       while (q.length) { const k = q.shift(), x = k % W, y = Math.floor(k / W); [[1,0],[-1,0],[0,1],[0,-1]].forEach(([dx, dy]) => { const nx = x + dx, ny = y + dy, nk = key(nx, ny); if (nx >= 0 && ny >= 0 && nx < W && ny < H && !walls.has(nk) && !seen.has(nk)) { seen.add(nk); q.push(nk); } }); }
       if ([...cheese].every(k => seen.has(k))) break;
     }
-    const wrap = el('div', 'mazeWrap'), say = sayBox('방향키 <b>← ↑ → ↓</b>를 눌러 냥냥이를 움직여요!'), maze = el('div', 'maze'), cells = [];
+    const wrap = el('div', 'mazeWrap'), say = sayBox('방향키 <b>← ↑ → ↓</b>나 화면의 화살표 버튼으로 냥냥이를 움직여요!'), maze = el('div', 'maze'), cells = [];
     maze.style.gridTemplateColumns = `repeat(${W},1fr)`; maze.style.gridTemplateRows = `repeat(${H},1fr)`; maze.style.setProperty('--mw', [560, 640, 720][L] + 'px');
     for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
       const k = key(x, y), cell = el('div', 'cell' + (walls.has(k) ? ' wall' : ''), walls.has(k) ? '📚' : cheese.has(k) ? '🐟' : '');
       cell.style.gridColumn = x + 1; cell.style.gridRow = y + 1; cells.push(cell); maze.append(cell);
     }
     const pl = el('div', 'player', '<img src="img/nyang_1.png" alt="냥냥이">'); maze.append(pl);
-    const ak = el('div', 'akeys'), akeys = {};
-    [['ArrowUp','↑'],['ArrowLeft','←'],['ArrowDown','↓'],['ArrowRight','→']].forEach(([cd, l]) => { const k = el('div', 'k', l); k.dataset.code = cd; akeys[cd] = k; ak.append(k); });
+    const ak = el('div', 'akeys touch'), akeys = {};
+    [['ArrowUp','↑'],['ArrowLeft','←'],['ArrowDown','↓'],['ArrowRight','→']].forEach(([cd, l]) => {
+      const k = el('button', 'k', l); k.type = 'button'; k.dataset.code = cd; k.setAttribute('aria-label', { ArrowUp: '위로', ArrowDown: '아래로', ArrowLeft: '왼쪽으로', ArrowRight: '오른쪽으로' }[cd]);
+      k.addEventListener('pointerdown', e => { e.preventDefault(); if (c.alive && c.key) c.key({ repeat: false }, cd); });   // 화면 버튼: 누르는 순간 한 칸
+      akeys[cd] = k; ak.append(k);
+    });
+    // 방 그림 위에서 손가락으로 밀기(스와이프)
+    let sw = null;
+    maze.addEventListener('pointerdown', e => { if (e.pointerType === 'mouse') return; sw = { x: e.clientX, y: e.clientY }; });
+    maze.addEventListener('pointerup', e => { if (!sw) return; const dx = e.clientX - sw.x, dy = e.clientY - sw.y; sw = null; if (Math.max(Math.abs(dx), Math.abs(dy)) < 24) return;
+      c.key({ repeat: false }, Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 'ArrowRight' : 'ArrowLeft') : (dy > 0 ? 'ArrowDown' : 'ArrowUp')); });
+    maze.addEventListener('pointercancel', () => { sw = null; });
     wrap.append(say, maze, ak); c.body.append(wrap);
     let px = 0, py = 0, got = 0; const t0 = performance.now();
     const place = () => { pl.style.gridColumn = px + 1; pl.style.gridRow = py + 1; };
@@ -1681,7 +1748,7 @@ const GAMES = [
     const flash = cd => { const k = akeys[cd]; k.classList.remove('down'); void k.offsetWidth; k.classList.add('down'); setTimeout(() => k.classList.remove('down'), 160); };
     c.key = (e, code) => {
       const d = { ArrowUp: [0, -1], ArrowDown: [0, 1], ArrowLeft: [-1, 0], ArrowRight: [1, 0] }[code];
-      if (!d) { say.set('냥냥이는 <b>방향키</b>로만 움직여요. 키보드 오른쪽 아래를 찾아봐요!'); return; }
+      if (!d) { say.set('냥냥이는 <b>방향키</b>나 화면의 <b>화살표 버튼</b>으로 움직여요!'); return; }
       flash(code); if (d[0]) pl.classList.toggle('left', d[0] < 0);
       const nx = px + d[0], ny = py + d[1], nk = key(nx, ny);
       if (nx < 0 || ny < 0 || nx >= W || ny >= H || walls.has(nk)) { pl.classList.remove('bump'); void pl.offsetWidth; pl.classList.add('bump'); sfx.bad(); return; }
@@ -1697,11 +1764,12 @@ const GAMES = [
 /* ---- 14. keys: spacebar runner ---- */
 { id: 'jump', town: 'key', title: '책상 위 점프', skill: '스페이스바', color: 'var(--pink)', r: -1.6, keys: true,
   desc: '스페이스바를 눌러 책상 위 물건을 폴짝 뛰어넘어요.',
-  how: ['키보드 맨 아래에 있는 가장 긴 키가 <b>스페이스바</b>예요.', '물건이 가까이 오면 엄지손가락으로 <b>톡</b> 눌러 점프!', '단계가 오를수록 빨라져요!'],
+  how: ['키보드 맨 아래에 있는 가장 긴 키가 <b>스페이스바</b>예요.', '물건이 가까이 오면 엄지손가락으로 <b>톡</b> 눌러 점프!', '키보드가 없으면 화면의 <b>스페이스바 버튼</b>이나 책상 그림을 손가락으로 톡! 단계가 오를수록 빨라져요.'],
   levels: [['살금살금', '천천히 8개 넘기'], ['총총총', '조금 빠르게 12개'], ['쌩쌩', '빠르게 15개']],
   run(c) {
     const L = c.level, GOAL = [8, 12, 15][L], SPEED = [200, 250, 300][L], GAP = [[1.9, 3], [1.6, 2.6], [1.3, 2.3]][L];
-    const say = sayBox('물건이 다가오면 <b>스페이스바</b>를 톡! 눌러서 점프해요.'), wrap = el('div', 'runWrap'), cv = el('canvas'), sp = el('div', 'spaceKey', '스페이스바');
+    const say = sayBox('물건이 다가오면 <b>스페이스바</b>를 톡! 눌러서 점프해요. 화면을 눌러도 돼요.'), wrap = el('div', 'runWrap'), cv = el('canvas'), sp = el('button', 'spaceKey', '스페이스바 <small>눌러서 점프</small>');
+    sp.type = 'button'; sp.setAttribute('aria-label', '점프');
     cv.setAttribute('aria-label', '냥냥이가 책상 위를 달리는 화면'); wrap.append(cv); c.body.append(say, wrap, sp);
     const g = cv.getContext('2d'); const H = 280; let W = 600;
     const fit = () => { const dpr = window.devicePixelRatio || 1; W = wrap.clientWidth || 600; cv.width = W * dpr; cv.height = H * dpr; cv.style.height = H + 'px'; g.setTransform(dpr, 0, 0, dpr, 0, 0); };
@@ -1709,11 +1777,13 @@ const GAMES = [
     const OBS = ['📚','☕','🧸','📦','🎒','⏰','🧃','🎲'], GROUND = H - 78, MX = 96;
     let y = 0, vy = 0, obs = [], next = 1.6, speed = SPEED, pass = 0, hits = 0, hurt = 0, off = 0, last = null, T = 0;
     const hud = () => c.hud(chip('🦘', `${pass} / ${GOAL}`) + chip('💥', `아야 ${hits}`)); hud();
+    const jump = () => { sp.classList.add('dn'); setTimeout(() => sp.classList.remove('dn'), 140); if (y === 0) { vy = 640; sfx.jump(); } };
     c.key = (e, code) => {
       if (code !== 'Space') { say.set('점프는 <b>스페이스바</b>! 키보드 맨 아래에서 가장 긴 키예요.'); return; }
-      if (e.repeat) return; sp.classList.add('dn'); setTimeout(() => sp.classList.remove('dn'), 140);
-      if (y === 0) { vy = 640; sfx.jump(); }
+      if (e.repeat) return; jump();
     };
+    // 터치: 화면의 스페이스바 버튼이나 책상 그림을 누르는 순간 점프
+    [sp, wrap].forEach(t => t.addEventListener('pointerdown', e => { if (e.button > 0 || !c.alive) return; e.preventDefault(); jump(); }));
     const circle = (x, yy, r) => { g.beginPath(); g.arc(x, yy, r, 0, Math.PI * 2); g.fill(); };
     const drawMouse = (x, b) => {
       const run = y === 0, bob = run ? Math.abs(Math.sin(T * 12)) * -5 : 0, R = 30;
@@ -1753,57 +1823,202 @@ const GAMES = [
   } },
 
 /* ---- 15. keys: piano ---- */
-{ id: 'piano', town: 'key', title: '키보드 연주', skill: '가운뎃줄 키', color: 'var(--grape)', r: 1.1, keys: true,
-  desc: '가운뎃줄 키가 악기가 돼요. 피아노·바이올린·기타·드럼 등 8가지 악기로 동요를 연주해요.',
-  how: ['왼손은 <b>ㅁ ㄴ ㅇ ㄹ</b>, 오른손은 <b>ㅎ ㅗ ㅓ ㅏ</b> 위에 올려요.', '<b>ㅁ</b>부터 차례로 도 레 미 파 솔 라 시 도 소리가 나요.', '<b>악기</b>를 골라요. 숫자 키 <b>1~8</b>로도 바꿀 수 있어요.', '반짝이는 키를 따라 노래 한 곡을 끝까지 연주해요.'],
+{ id: 'piano', town: 'key', title: '키보드 연주', skill: '흰건반 15개', color: 'var(--grape)', r: 1.1, keys: true,
+  desc: '키보드가 낮은 파부터 높은 파까지 흰건반 15개 피아노가 돼요. 8가지 악기로 동요를 연주해요.',
+  how: ['가운뎃줄 <b>ㅁ ㄴ ㅇ ㄹ ㅎ ㅗ ㅓ</b>는 가운데 <b>도~시</b>예요.', '아랫줄 <b>ㅋ ㅌ ㅊ ㅍ</b>는 <b>낮은 파 솔 라 시</b>예요.', '윗줄 <b>ㅂ ㅈ ㄷ ㄱ</b>는 <b>높은 도 레 미 파</b>예요.', '<b>악기</b>는 숫자 키 <b>1~8</b>로도 바꿔요. 반짝이는 건반을 따라 노래를 연주해요.'],
   run(c) {
     c.grabAll = true;
     let instr = MUSIC.LIST.some(x => x.id === DATA.instr) ? DATA.instr : 'piano';
     const isDrum = () => instr === 'drum';
-    const label = i => isDrum() ? DRUM_PARTS[i][0] : NOTES[i][1];
     const ro = w => { const j = (w.charCodeAt(w.length - 1) - 0xAC00) % 28; return w + (j > 0 && j !== 8 ? '으로' : '로'); };
-    const NOTES = [['KeyA','도',261.63,'#FF8FA3'],['KeyS','레',293.66,'#FFB36B'],['KeyD','미',329.63,'#FFD95A'],['KeyF','파',349.23,'#8FDB7A'],['KeyG','솔',392,'#5CCFC0'],['KeyH','라',440,'#6CB8FF'],['KeyJ','시',493.88,'#A98BFF'],['KeyK','높은 도',523.25,'#FF9EE0']];
+    // 흰건반 15개: 낮은 파(F3) ~ 높은 파(F5). 아랫줄=낮은, 가운뎃줄=가운데, 윗줄=높은 소리
+    const DEG = ['도', '레', '미', '파', '솔', '라', '시'], SEMI = [0, 2, 4, 5, 7, 9, 11];
+    const DCOL = ['#FF8FA3', '#FFB36B', '#FFD95A', '#8FDB7A', '#5CCFC0', '#6CB8FF', '#A98BFF'];
+    const TAG = ['낮은', '', '높은'];
+    const mk = (code, oct, deg) => { const midi = 48 + 12 * oct + SEMI[deg]; return { code, oct, deg, short: DEG[deg], tag: TAG[oct], name: (TAG[oct] ? TAG[oct] + ' ' : '') + DEG[deg], f: 440 * Math.pow(2, (midi - 69) / 12), col: DCOL[deg] }; };
+    const NOTES = [
+      ...['KeyZ', 'KeyX', 'KeyC', 'KeyV'].map((k, i) => mk(k, 0, 3 + i)),
+      ...['KeyA', 'KeyS', 'KeyD', 'KeyF', 'KeyG', 'KeyH', 'KeyJ'].map((k, i) => mk(k, 1, i)),
+      ...['KeyQ', 'KeyW', 'KeyE', 'KeyR'].map((k, i) => mk(k, 2, i)),
+    ];
+    const ALIAS = { KeyK: 'KeyQ' };   // 예전처럼 ㅏ를 눌러도 높은 도
+    const keyChar = code => (HMAP[code] || [''])[0];
+    const drumOf = i => NOTES[i].code === 'KeyR' ? 7 : NOTES[i].deg;   // 맨 끝 높은 파 = 심벌즈
+    const label = i => isDrum() ? DRUM_PARTS[drumOf(i)][0] : NOTES[i].short;
+    const longName = i => isDrum() ? DRUM_PARTS[drumOf(i)][0] : NOTES[i].name;
     const SONGS = { '학교종': '솔솔라라솔솔미 솔솔미미레 솔솔라라솔솔미 솔미레미도', '비행기': '미레도레미미미 레레레 미솔솔 미레도레미미미 레레미레도', '나비야': '솔미미 파레레 도레미파솔솔솔 솔미미미 파레레 도미솔솔미미미' };
     let song = '학교종', seq = [], idx = 0, miss = 0, freeMode = false;
-    const say = sayBox('먼저 <b>악기</b>를 골라요. 그다음 반짝이는 건반을 따라 연주해요!'), instrs = el('div', 'instrs'), songs = el('div', 'songs'), sheet = el('div', 'sheetm'), piano = el('div', 'piano');
+    const say = sayBox('먼저 <b>악기</b>를 골라요. 그다음 반짝이는 건반을 따라 연주해요!'), instrs = el('div', 'instrs'), songs = el('div', 'songs'), sheet = el('div', 'sheetm'), piano = el('div', 'pianoW');
     c.body.append(say, instrs, songs, sheet, piano);
-    const keys = NOTES.map(([code, name, f, col]) => { const k = el('div', 'pkey', `<b>${name}</b><span class="jm">${HMAP[code][0]}</span><small>${code.slice(3)}</small>`); k.style.setProperty('--nc', col); k.addEventListener('pointerdown', () => play(code)); piano.append(k); return k; });
+    // 피아노 한 줄: 위쪽 띠에 낮은/가운데/높은 구역 표시, 아래는 흰건반 15개
+    const bands = el('div', 'pbands', ['낮은 소리', '가운데 소리', '높은 소리'].map((t, o) => `<span class="o${o}" style="flex:${NOTES.filter(n => n.oct === o).length}">${t}</span>`).join(''));
+    const bed = el('div', 'pbed'); piano.append(bands, bed);
+    const keys = NOTES.map((n, i) => { const k = el('div', 'pkey', `<b>${n.short}</b><span class="jm">${keyChar(n.code)}</span><small>${n.tag}</small>`); k.dataset.o = n.oct; if (i && NOTES[i - 1].oct !== n.oct) k.classList.add('octStart'); k.style.setProperty('--nc', n.col); k.addEventListener('pointerdown', () => play(n.code)); bed.append(k); return k; });
     const curI = () => MUSIC.LIST.find(x => x.id === instr);
     const hud = () => c.hud(chip(curI().e, curI().n) + (freeMode ? chip('🎶', '자유롭게 치기') : chip('🎵', `${idx} / ${seq.length}`) + chip('🙈', `틀림 ${miss}`)));
     MUSIC.LIST.forEach((x, n) => { const b = el('button', 'songBtn instBtn', `${x.e} ${x.n}<small>${n + 1}</small>`); b.type = 'button'; b.dataset.i = x.id; b.addEventListener('click', () => { b.blur(); setInstr(x.id, true); }); instrs.append(b); });
     function setInstr(id, announce) {
       instr = id; DATA.instr = id; persist(); piano.dataset.instr = id;
       [...instrs.children].forEach(b => b.classList.toggle('on', b.dataset.i === id));
-      keys.forEach((k, i) => { k.querySelector('b').textContent = label(i); k.querySelector('small').textContent = isDrum() ? DRUM_PARTS[i][1] : NOTES[i][0].slice(3); });
+      keys.forEach((k, i) => { k.querySelector('b').textContent = label(i); k.querySelector('small').textContent = isDrum() ? DRUM_PARTS[drumOf(i)][1] : NOTES[i].tag; });
       drawSheet();
-      if (announce) { const I = curI(); say.set(`${I.e} <b>${I.n}</b> 소리로 바뀌었어요!${isDrum() ? ' 건반마다 다른 북 소리가 나요.' : ''}`); MUSIC.play(id, NOTES[4][2], 4); }
+      const mid = NOTES.findIndex(n => n.code === 'KeyG');
+      if (announce) { const I = curI(); say.set(`${I.e} <b>${I.n}</b> 소리로 바뀌었어요!${isDrum() ? ' 건반마다 다른 북 소리가 나요.' : ''}`); MUSIC.play(id, NOTES[mid].f, drumOf(mid)); }
     }
     const drawSheet = () => {
-      if (freeMode) { sheet.innerHTML = '<span style="min-width:auto;padding:0 14px;border:0;background:none">마음대로 쳐 보세요! 별은 노래를 고르면 받을 수 있어요.</span>'; keys.forEach(k => k.classList.remove('next')); hud(); return; }
-      let n = 0; sheet.innerHTML = [...SONGS[song]].map(ch => { if (ch === ' ') return '<i class="gap"></i>'; const i = n++, N = NOTES[seq[i]]; return `<span class="${i < idx ? 'done' : i === idx ? 'cur' : ''}" style="--nc:${N[3]}">${label(seq[i])}<small>${HMAP[N[0]][0]}</small></span>`; }).join('');
+      if (freeMode) { sheet.innerHTML = '<span style="min-width:auto;padding:0 14px;border:0;background:none">세 줄을 모두 써서 마음대로 쳐 보세요! 별은 노래를 고르면 받을 수 있어요.</span>'; keys.forEach(k => k.classList.remove('next')); hud(); return; }
+      let n = 0; sheet.innerHTML = [...SONGS[song]].map(ch => { if (ch === ' ') return '<i class="gap"></i>'; const i = n++, N = NOTES[seq[i]]; return `<span class="${i < idx ? 'done' : i === idx ? 'cur' : ''}" style="--nc:${N.col}">${label(seq[i])}<small>${keyChar(N.code)}</small></span>`; }).join('');
       keys.forEach((k, i) => k.classList.toggle('next', idx < seq.length && i === seq[idx])); hud();
     };
     const setSong = name => {
       freeMode = name === null; song = name || song; idx = 0; miss = 0;
-      if (!freeMode) seq = [...SONGS[song]].filter(ch => ch !== ' ').map(ch => NOTES.findIndex(n => n[1] === ch));
+      if (!freeMode) seq = [...SONGS[song]].filter(ch => ch !== ' ').map(ch => NOTES.findIndex(n => n.oct === 1 && n.short === ch));
       [...songs.children].forEach(b => b.classList.toggle('on', freeMode ? b.dataset.s === '' : b.dataset.s === song)); drawSheet();
     };
     Object.keys(SONGS).concat(['']).forEach(s => { const b = el('button', 'songBtn', s || '자유롭게 치기'); b.type = 'button'; b.dataset.s = s; b.addEventListener('click', () => { b.blur(); setSong(s || null); }); songs.append(b); });
     function play(code) {
-      const i = NOTES.findIndex(n => n[0] === code); if (i < 0 || !c.alive) return false;
+      code = ALIAS[code] || code;
+      const i = NOTES.findIndex(n => n.code === code); if (i < 0 || !c.alive) return false;
       const k = keys[i]; k.classList.remove('dn'); void k.offsetWidth; k.classList.add('dn'); setTimeout(() => k.classList.remove('dn'), 180);
-      MUSIC.play(instr, NOTES[i][2], i);
+      MUSIC.play(instr, NOTES[i].f, drumOf(i));
       if (freeMode || idx >= seq.length) return true;
       if (i === seq[idx]) { idx++; drawSheet(); if (idx === seq.length) { say.set(`${curI().e} <b>${song}</b> 연주 끝! 짝짝짝!`); c.later(() => c.done(miss <= 2 ? 3 : miss <= 6 ? 2 : 1, `${ro(curI().n)} '${song}'을 끝까지 연주했어요! (틀린 음 ${miss}개)`), 900); } }
-      else { miss++; hud(); const N = NOTES[seq[idx]]; say.set(`다음은 <b>${label(seq[idx])}</b>, <b>${HMAP[N[0]][0]}</b> 키예요.`); }
+      else { miss++; hud(); const N = NOTES[seq[idx]]; say.set(`다음은 <b>${longName(seq[idx])}</b>, 가운뎃줄 <b>${keyChar(N.code)}</b> 키예요.`); }
       return true;
     }
     c.key = (e, code) => {
       if (e.repeat) return;
       const d = /^(Digit|Numpad)([1-8])$/.exec(code); if (d) { setInstr(MUSIC.LIST[+d[2] - 1].id, true); return; }
-      if (!play(code)) say.set('연주 건반은 가운뎃줄 <b>ㅁ ㄴ ㅇ ㄹ ㅎ ㅗ ㅓ ㅏ</b> 키예요. 숫자 <b>1~8</b>은 악기를 바꿔요.');
+      if (!play(code)) say.set('아랫줄 <b>ㅋ ㅌ ㅊ ㅍ</b>는 낮은 소리, 가운뎃줄 <b>ㅁ~ㅓ</b>는 가운데 소리, 윗줄 <b>ㅂ ㅈ ㄷ ㄱ</b>는 높은 소리예요. 숫자 <b>1~8</b>은 악기를 바꿔요.');
     };
     setSong('학교종'); setInstr(instr, false);
+  } },
+
+/* ---- 15-2. keys: falling-note piano game (별빛 건반) ---- */
+{ id: 'tiles', town: 'key', title: '별빛 건반', skill: '흰건반 리듬', color: 'var(--lilac)', r: -1.2, keys: true, isNew: true,
+  art: 'data:image/svg+xml,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300"><defs><linearGradient id="b" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1E1660"/><stop offset=".7" stop-color="#5B33B8"/><stop offset="1" stop-color="#8C5BF0"/></linearGradient><radialGradient id="n"><stop offset=".45" stop-color="#fff"/><stop offset=".62" stop-color="#CFE6FF"/><stop offset="1" stop-color="#7FB6FF" stop-opacity="0"/></radialGradient></defs><rect width="720" height="300" fill="url(#b)"/><g fill="#fff" opacity=".9"><path d="M90 40l5 14 14 5-14 5-5 14-5-14-14-5 14-5z"/><path d="M610 60l4 10 10 4-10 4-4 10-4-10-10-4 10-4z"/><path d="M420 30l3 8 8 3-8 3-3 8-3-8-8-3 8-3z"/><path d="M250 110l3 8 8 3-8 3-3 8-3-8-8-3 8-3z"/></g><g stroke="#B9D4FF" stroke-opacity=".35" stroke-width="10" stroke-linecap="round"><path d="M200 20v70"/><path d="M380 70v60"/><path d="M560 0v80"/></g><circle cx="200" cy="100" r="34" fill="url(#n)"/><circle cx="380" cy="140" r="34" fill="url(#n)"/><circle cx="560" cy="88" r="34" fill="url(#n)"/><rect x="0" y="196" width="720" height="8" fill="#FF7FBE"/><g fill="#fff" stroke="#2C1D42" stroke-width="5">${[0,1,2,3,4,5,6,7].map(i => `<rect x="${i * 90 + 2}" y="204" width="86" height="110" rx="10"/>`).join('')}</g><g fill="#8C5BF0"><circle cx="225" cy="270" r="8"/><circle cx="405" cy="270" r="8"/><circle cx="585" cy="270" r="8"/></g></svg>`),
+  desc: '별빛 음표가 떨어지면 흰건반을 톡! 노래에 맞춰 건반을 눌러요. 화면 터치와 키보드 모두 돼요.',
+  how: ['위에서 <b>반짝이는 음표</b>가 내려와요. 음표 안의 글자가 누를 키예요.', '음표가 <b>빛나는 선</b>에 닿을 때 그 건반을 손가락으로 <b>톡</b>! 못 누르고 지나가면 <b>놓침</b>이에요.', '단계가 오를수록 건반이 많아지고 빨라져요. 3단계는 <b>낮은 파부터 높은 파까지</b> 15개!'],
+  levels: [['반짝반짝 작은 별', '건반 7개 · 천천히'], ['환희의 송가', '건반 11개 · 낮은 소리까지'], ['건반 여행', '건반 15개 · 낮은 파~높은 파']],
+  run(c) {
+    c.grabAll = true;
+    const L = c.level;
+    const DEG = ['도', '레', '미', '파', '솔', '라', '시'], SEMI = [0, 2, 4, 5, 7, 9, 11];
+    const DCOL = ['#FF8FA3', '#FFB36B', '#FFD95A', '#8FDB7A', '#5CCFC0', '#6CB8FF', '#A98BFF'], TAG = ['낮은', '', '높은'];
+    const mk = (code, oct, deg) => ({ code, oct, deg, short: DEG[deg], tag: TAG[oct], f: 440 * Math.pow(2, (48 + 12 * oct + SEMI[deg] - 69) / 12), col: DCOL[deg] });
+    const ALL = [
+      ...['KeyZ', 'KeyX', 'KeyC', 'KeyV'].map((k, i) => mk(k, 0, 3 + i)),
+      ...['KeyA', 'KeyS', 'KeyD', 'KeyF', 'KeyG', 'KeyH', 'KeyJ'].map((k, i) => mk(k, 1, i)),
+      ...['KeyQ', 'KeyW', 'KeyE', 'KeyR'].map((k, i) => mk(k, 2, i)),
+    ];
+    const LANES = [ALL.filter(n => n.oct === 1), ALL.filter(n => n.oct <= 1), ALL][L];
+    // 노래: _ = 낮은, ^ = 높은 / 박자: 기본 1박, '.' = 1.5박, ',' = 반 박, '-' 하나마다 1박 더 (모두 저작권이 끝난 옛 노래)
+    const SONG = [
+      '도 도 솔 솔 라 라 솔- 파 파 미 미 레 레 도- 솔 솔 파 파 미 미 레- 솔 솔 파 파 미 미 레- 도 도 솔 솔 라 라 솔- 파 파 미 미 레 레 도-',
+      '_파 _솔 _라 _시 도- _시 _라 _솔- _파 _라 _솔 _시 도- 미 미 파 솔 솔 파 미 레 도 도 레 미 미. 레, 레- 미 미 파 솔 솔 파 미 레 도 도 레 미 레. 도, 도- 레 레 미 도 레 미, 파, 미 도 레 미, 파, 미 레 도 레 _솔- 미 미 파 솔 솔 파 미 레 도 도 레 미 레. 도, 도-',
+      '_파 _솔 _라 _시 도 레 미 파 솔 라 시 ^도 ^레 ^미 ^파- ^미 ^레 ^도 시 라 솔 파 미 레 도 _시 _라 _솔 _파- 도 미 솔 ^도 ^미 ^도 솔 미 도- _솔 _시 레 솔 시 ^레 ^파- 미 미 파 솔 솔 파 미 레 도 도 레 미 레. 도, 도-',
+    ][L];
+    const BPM = [76, 96, 112][L], FALL = [2.8, 2.3, 1.9][L], beat = 60 / BPM, PRE = 3, LEAD = PRE + FALL;
+    const PERFECT = .1, GOOD = .2;
+    let tt = LEAD; const notes = [];
+    SONG.split(/\s+/).forEach(tok => {
+      const m = /^([_^]?)(도|레|미|파|솔|라|시)([.,]?)(-*)$/.exec(tok); if (!m) return;
+      const oct = m[1] === '_' ? 0 : m[1] === '^' ? 2 : 1, lane = LANES.findIndex(n => n.oct === oct && n.short === m[2]);
+      if (lane >= 0) notes.push({ t: tt, lane, state: 0 });
+      tt += beat * ((m[3] === '.' ? 1.5 : m[3] === ',' ? .5 : 1) + m[4].length);
+    });
+    const END = tt + 1.2, TOTAL = notes.length;
+    const keyChar = code => (HMAP[code] || [''])[0];
+
+    const say = sayBox('음표가 <b>빛나는 선</b>에 닿을 때 건반을 톡! 늦으면 <b>놓침</b>이에요. 곧 시작해요.');
+    const box = el('div', 'pianoW tilesW'), stageEl = el('div', 'tstage'), cv = el('canvas'), bed = el('div', 'pbed');
+    stageEl.append(cv); box.append(stageEl, bed); c.body.append(say, box);
+    const keys = LANES.map((n, i) => { const k = el('div', 'pkey', `<b>${n.short}</b><span class="jm">${keyChar(n.code)}</span><small>${n.tag}</small>`); k.dataset.o = n.oct; if (i && LANES[i - 1].oct !== n.oct) k.classList.add('octStart'); k.style.setProperty('--nc', n.col);
+      k.addEventListener('pointerdown', e => { e.preventDefault(); press(i); }); bed.append(k); return k; });
+    const g = cv.getContext('2d'); let W = 600, H = 360, lx = [], lw = 40;
+    const fit = () => {
+      const dpr = window.devicePixelRatio || 1; W = stageEl.clientWidth || 600; H = Math.max(280, Math.min(440, Math.round(window.innerHeight * .46)));
+      cv.width = W * dpr; cv.height = H * dpr; cv.style.height = H + 'px'; g.setTransform(dpr, 0, 0, dpr, 0, 0);
+      const r0 = cv.getBoundingClientRect(); lx = keys.map(k => { const r = k.getBoundingClientRect(); return r.left - r0.left + r.width / 2; }); lw = keys[0].getBoundingClientRect().width;
+    };
+    fit(); c.on(window, 'resize', fit); requestAnimationFrame(fit);
+    const stars = Array.from({ length: 46 }, () => ({ x: Math.random(), y: Math.random(), r: rand(.6, 1.8), p: Math.random() * 6 }));
+    let t0 = performance.now(), now = 0, perfect = 0, good = 0, miss = 0, combo = 0, best = 0; const fx = [];
+    const judged = () => perfect + good + miss, acc = () => judged() ? (perfect + good * .6) / judged() : 1;
+    const hud = () => c.hud(chip('🎵', `${judged()} / ${TOTAL}`) + chip('✨', `콤보 ${combo}`) + chip('🎯', `${Math.round(acc() * 100)}%`)); hud();
+    // 소리 없이 빛으로만: 누르면 번쩍, 놓치면 빨간 표시
+    function press(i) {
+      if (!c.alive) return;
+      const k = keys[i]; k.classList.remove('dn', 'tmiss'); void k.offsetWidth; k.classList.add('dn'); setTimeout(() => k.classList.remove('dn'), 150);
+      fx.push({ type: 'tap', lane: i, t: now });
+      let hit = null, d = 9; for (const n of notes) { if (n.state || n.lane !== i) continue; const dd = Math.abs(n.t - now); if (dd < d) { d = dd; hit = n; } if (n.t - now > GOOD) break; }
+      if (!hit || d > GOOD) return;
+      hit.state = d <= PERFECT ? 1 : 2; if (hit.state === 1) perfect++; else good++; combo++; best = Math.max(best, combo);
+      fx.push({ type: 'hit', lane: i, t: now, txt: hit.state === 1 ? '최고!' : '좋아요', col: LANES[i].col }); hud();
+      if (combo && combo % 10 === 0) say.set(`<b>${combo}콤보!</b> 정말 잘하고 있어요!`);
+    }
+    c.on(cv, 'pointerdown', e => { e.preventDefault(); const r = cv.getBoundingClientRect(), x = e.clientX - r.left; let bi = 0; lx.forEach((v, i) => { if (Math.abs(v - x) < Math.abs(lx[bi] - x)) bi = i; }); press(bi); });
+    c.key = (e, code) => { if (e.repeat) return; code = code === 'KeyK' ? 'KeyQ' : code; const i = LANES.findIndex(n => n.code === code); if (i >= 0) press(i); };
+    const glowDisk = (x, y, r, col, label) => {
+      const gr = g.createRadialGradient(x, y, r * .2, x, y, r * 1.6); gr.addColorStop(0, 'rgba(255,255,255,.95)'); gr.addColorStop(.5, col + 'cc'); gr.addColorStop(1, col + '00');
+      g.fillStyle = gr; g.beginPath(); g.arc(x, y, r * 1.6, 0, Math.PI * 2); g.fill();
+      g.fillStyle = '#fff'; g.beginPath(); g.arc(x, y, r, 0, Math.PI * 2); g.fill(); g.lineWidth = Math.max(2, r * .16); g.strokeStyle = col; g.stroke();
+      g.fillStyle = '#3B2A4A'; g.font = `${Math.round(r * .95)}px Jua, sans-serif`; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(label, x, y + 1);
+    };
+    let said = -1;
+    c.raf(t => {
+      now = (t - t0) / 1000;
+      if (now < PRE) { const cd = Math.ceil(PRE - now); if (cd !== said) { said = cd; say.set(`<b>${cd}</b>… 손가락을 건반 위에 올려요!`); } }
+      else if (said !== 0) { said = 0; say.set('<b>시작!</b> 음표가 빛나는 선에 닿을 때 톡!'); }
+      for (const n of notes) if (!n.state && now - n.t > GOOD) {   // 건반에 닿을 때까지 못 누르면 실패
+        n.state = 3; miss++; combo = 0; hud(); fx.push({ type: 'miss', lane: n.lane, t: now });
+        const k = keys[n.lane]; k.classList.remove('tmiss'); void k.offsetWidth; k.classList.add('tmiss');
+        if (miss === 1 || miss % 5 === 0) say.set('앗, 놓쳤어요! 음표가 <b>빛나는 선</b>에 닿기 전에 건반을 눌러요.');
+      }
+      const HIT = H - 26;
+      // 배경: 밤하늘 + 반짝이
+      const bg = g.createLinearGradient(0, 0, 0, H); bg.addColorStop(0, '#16104A'); bg.addColorStop(.65, '#4A2B9E'); bg.addColorStop(1, '#8556E8');
+      g.fillStyle = bg; g.fillRect(0, 0, W, H);
+      for (const s of stars) { g.globalAlpha = .35 + .65 * Math.abs(Math.sin(now * 1.6 + s.p)); g.fillStyle = '#fff'; g.beginPath(); g.arc(s.x * W, s.y * H * .9, s.r, 0, Math.PI * 2); g.fill(); }
+      g.globalAlpha = 1;
+      lx.forEach((x, i) => { g.fillStyle = i % 2 ? 'rgba(255,255,255,.035)' : 'rgba(255,255,255,.07)'; g.fillRect(x - lw / 2, 0, lw, HIT); });
+      // 빛나는 선
+      const hl = g.createLinearGradient(0, HIT - 10, 0, HIT + 10); hl.addColorStop(0, 'rgba(255,127,190,0)'); hl.addColorStop(.5, 'rgba(255,170,220,.95)'); hl.addColorStop(1, 'rgba(255,127,190,0)');
+      g.fillStyle = hl; g.fillRect(0, HIT - 10, W, 20);
+      // 음표
+      const R = Math.max(10, Math.min(30, lw * .36));
+      for (const n of notes) {
+        if (n.state) continue;   // 맞힌 음표·놓친 음표는 사라져요
+        const y = HIT - (n.t - now) / FALL * HIT; if (y < -R * 2 || y > H + R) continue;
+        const x = lx[n.lane], col = LANES[n.lane].col;
+        const tr = g.createLinearGradient(0, y - R * 4, 0, y); tr.addColorStop(0, col + '00'); tr.addColorStop(1, col + '88');
+        g.fillStyle = tr; g.fillRect(x - R * .45, y - R * 4, R * .9, R * 4);
+        glowDisk(x, y, R, col, keyChar(LANES[n.lane].code));
+      }
+      // 효과: 번쩍(누름) · 반짝 고리(맞힘) · 빨간 X(놓침)
+      for (let i = fx.length - 1; i >= 0; i--) {
+        const f = fx[i], dur = f.type === 'tap' ? .25 : .6, a = (now - f.t) / dur; if (a > 1) { fx.splice(i, 1); continue; }
+        const x = lx[f.lane];
+        if (f.type === 'tap') {
+          const col = g.createLinearGradient(0, 0, 0, HIT); col.addColorStop(0, 'rgba(255,255,255,0)'); col.addColorStop(1, `rgba(255,255,255,${.55 * (1 - a)})`);
+          g.fillStyle = col; g.fillRect(x - lw / 2, 0, lw, HIT + 6);
+          g.globalAlpha = 1 - a; g.fillStyle = '#fff'; g.beginPath(); g.ellipse(x, HIT, lw * .45 * (1 + a), 7 * (1 - a) + 2, 0, 0, Math.PI * 2); g.fill(); g.globalAlpha = 1;
+        } else if (f.type === 'hit') {
+          g.globalAlpha = 1 - a; g.strokeStyle = '#fff'; g.lineWidth = 4 * (1 - a) + 1; g.beginPath(); g.arc(x, HIT, R * (1 + a * 1.4), 0, Math.PI * 2); g.stroke();
+          g.fillStyle = '#FFE27A'; for (let s = 0; s < 6; s++) { const an = s / 6 * Math.PI * 2 + a; g.beginPath(); g.arc(x + Math.cos(an) * R * (1.2 + a * 1.6), HIT + Math.sin(an) * R * (1.2 + a * 1.6), 3, 0, Math.PI * 2); g.fill(); }
+          g.fillStyle = '#fff'; g.font = `${Math.round(R * .8)}px Jua, sans-serif`; g.textAlign = 'center'; g.fillText(f.txt, x, HIT - R * 2 - a * 30); g.globalAlpha = 1;
+        } else {
+          g.globalAlpha = 1 - a; g.fillStyle = 'rgba(255,80,110,.35)'; g.fillRect(x - lw / 2, HIT - 60, lw, 66);
+          g.strokeStyle = '#FF5C7A'; g.lineWidth = 5; const s = R * .7; g.beginPath(); g.moveTo(x - s, HIT - s - 6); g.lineTo(x + s, HIT + s - 6); g.moveTo(x + s, HIT - s - 6); g.lineTo(x - s, HIT + s - 6); g.stroke();
+          g.fillStyle = '#FFC2CE'; g.font = `${Math.round(R * .75)}px Jua, sans-serif`; g.textAlign = 'center'; g.fillText('놓침', x, HIT - R * 2 - a * 24); g.globalAlpha = 1;
+        }
+      }
+      if (combo >= 3) { g.fillStyle = 'rgba(255,255,255,.9)'; g.font = '22px Jua, sans-serif'; g.textAlign = 'center'; g.fillText(`${combo} 콤보`, W / 2, 30); }
+      if (now > END && judged() >= TOTAL) {
+        const a = acc(), st = a >= .85 ? 3 : a >= .6 ? 2 : 1;
+        c.done(st, `${['반짝반짝 작은 별', '환희의 송가', '건반 여행'][L]} 연주 끝! 최고 ${perfect} · 좋아요 ${good} · 놓침 ${miss} (최고 콤보 ${best})`); return false;
+      }
+    });
   } },
 
 /* ---- 16. hangul: key positions ---- */
