@@ -1763,11 +1763,12 @@ const GAMES = [
 
 /* ---- 14. keys: spacebar runner ---- */
 { id: 'jump', town: 'key', title: '책상 위 점프', skill: '스페이스바', color: 'var(--pink)', r: -1.6, keys: true,
-  desc: '스페이스바를 눌러 책상 위 물건을 폴짝 뛰어넘어요.',
-  how: ['키보드 맨 아래에 있는 가장 긴 키가 <b>스페이스바</b>예요.', '물건이 가까이 오면 엄지손가락으로 <b>톡</b> 눌러 점프!', '키보드가 없으면 화면의 <b>스페이스바 버튼</b>이나 책상 그림을 손가락으로 톡! 단계가 오를수록 빨라져요.'],
-  levels: [['살금살금', '천천히 8개 넘기'], ['총총총', '조금 빠르게 12개'], ['쌩쌩', '빠르게 15개']],
+  desc: '스페이스바를 눌러 책상 위 물건을 폴짝 뛰어넘어요. 아야 5번이면 다시 도전!',
+  how: ['물건이 가까이 오면 <b>스페이스바</b>를 톡! 키보드가 없으면 화면의 <b>스페이스바 버튼</b>이나 책상 그림을 눌러요.', '물건에 부딪히면 <b>아야</b>! 아야가 <b>5번</b>이 되면 실패예요.', '<b>30초</b>를 버틸 때마다 냥냥이가 더 빨라져요. 끝까지 넘어 봐요!'],
+  levels: [['살금살금', '천천히 20개 넘기'], ['총총총', '조금 빠르게 25개'], ['쌩쌩', '빠르게 30개']],
   run(c) {
-    const L = c.level, GOAL = [8, 12, 15][L], SPEED = [200, 250, 300][L], GAP = [[1.9, 3], [1.6, 2.6], [1.3, 2.3]][L];
+    const L = c.level, GOAL = [20, 25, 30][L], SPEED = [200, 250, 300][L], GAP = [[1.9, 3], [1.6, 2.6], [1.3, 2.3]][L];
+    const MAXHIT = 5, BOOST_EVERY = 30;
     const say = sayBox('물건이 다가오면 <b>스페이스바</b>를 톡! 눌러서 점프해요. 화면을 눌러도 돼요.'), wrap = el('div', 'runWrap'), cv = el('canvas'), sp = el('button', 'spaceKey', '스페이스바 <small>눌러서 점프</small>');
     sp.type = 'button'; sp.setAttribute('aria-label', '점프');
     cv.setAttribute('aria-label', '냥냥이가 책상 위를 달리는 화면'); wrap.append(cv); c.body.append(say, wrap, sp);
@@ -1776,7 +1777,20 @@ const GAMES = [
     fit(); c.on(window, 'resize', fit);
     const OBS = ['📚','☕','🧸','📦','🎒','⏰','🧃','🎲'], GROUND = H - 78, MX = 96;
     let y = 0, vy = 0, obs = [], next = 1.6, speed = SPEED, pass = 0, hits = 0, hurt = 0, off = 0, last = null, T = 0;
-    const hud = () => c.hud(chip('🦘', `${pass} / ${GOAL}`) + chip('💥', `아야 ${hits}`)); hud();
+    let boost = 0, nextBoost = BOOST_EVERY, boostFx = 0, shownSec = -1;
+    const hud = () => c.hud(chip('🦘', `${pass} / ${GOAL}`) + chip('💥', `아야 ${hits} / ${MAXHIT}`) + chip('⏱', `${Math.floor(T)}초`) + (boost ? chip('⚡', `${boost + 1}단 속도`) : '')); hud();
+    // 아야 5번: 실패 화면 (보상 없음, 다음 단계도 안 열려요)
+    const fail = () => {
+      const g0 = curGame, lv0 = c.level, secs0 = Math.floor(T), pass0 = pass;
+      stopGame(); sfx.bad();
+      ocard.className = 'ocard';
+      ocard.innerHTML = `<div class="bigstamp" style="border-color:#9A86B4;color:#9A86B4">다시<br>도전!</div>
+        <h3>아야를 ${MAXHIT}번 했어요</h3><p>${secs0}초 동안 달리면서 물건 <b>${pass0}개</b>를 뛰어넘었어요.<br>물건이 가까이 오면 <b>조금 일찍</b> 점프해 봐요!</p>
+        <div class="obtns"><button class="btn primary" type="button" id="againBtn">다시 하기 <small>엔터</small></button><button class="btn ghost" type="button" id="homeBtn">놀이터로</button></div>`;
+      overlay.hidden = false;
+      $('#againBtn').addEventListener('click', () => runGame(g0, lv0));
+      $('#homeBtn').addEventListener('click', goHome);
+    };
     const jump = () => { sp.classList.add('dn'); setTimeout(() => sp.classList.remove('dn'), 140); if (y === 0) { vy = 640; sfx.jump(); } };
     c.key = (e, code) => {
       if (code !== 'Space') { say.set('점프는 <b>스페이스바</b>! 키보드 맨 아래에서 가장 긴 키예요.'); return; }
@@ -1806,17 +1820,35 @@ const GAMES = [
       g.textAlign = 'left'; g.font = '40px "Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji",sans-serif'; g.textBaseline = 'alphabetic';
       obs.forEach(o => { g.globalAlpha = o.hit ? .4 : 1; g.fillText(o.e, o.x, GROUND + 4); }); g.globalAlpha = 1;
       drawMouse(MX, GROUND - y);
+      // 남은 하트 (아야 5번까지)
+      g.textAlign = 'right'; g.textBaseline = 'top'; g.font = '22px "Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji",sans-serif';
+      g.fillText('❤️'.repeat(Math.max(0, MAXHIT - hits)) + '🤍'.repeat(Math.min(MAXHIT, hits)), W - 12, 10);
+      g.textBaseline = 'alphabetic';
+      if (boostFx > 0) {   // 빨라질 때 번쩍
+        g.globalAlpha = Math.min(1, boostFx); g.fillStyle = 'rgba(255,226,122,.25)'; g.fillRect(0, 0, W, GROUND);
+        g.fillStyle = '#7A4BE0'; g.font = '34px Jua, sans-serif'; g.textAlign = 'center'; g.fillText(`⚡ 빨라져요! ⚡`, W / 2, GROUND / 2); g.globalAlpha = 1;
+      }
     };
     c.raf(t => {
       if (last == null) last = t; const dt = Math.min(.05, (t - last) / 1000); last = t; T += dt;
+      if (Math.floor(T) !== shownSec) { shownSec = Math.floor(T); hud(); }
+      if (T >= nextBoost) {   // 30초 버틸 때마다 더 빠르게
+        nextBoost += BOOST_EVERY; boost++; speed *= 1.25; boostFx = 1.6; sfx.jump();
+        say.set(`<b>${BOOST_EVERY * boost}초</b>를 버텼어요! 이제 <b>더 빨라져요</b>. 조금 더 일찍 점프해요!`); hud();
+      }
+      boostFx = Math.max(0, boostFx - dt);
       if (vy || y > 0) { vy -= 1800 * dt; y += vy * dt; if (y <= 0) { y = 0; vy = 0; } }
       off += speed * dt; next -= dt;
       if (next <= 0) { obs.push({ x: W + 20, e: pick(OBS), hit: false, done: false }); next = rand(GAP[0], GAP[1]); }
       for (const o of obs) {
         o.x -= speed * dt;
         const ox1 = o.x + 8, ox2 = o.x + 36, top = GROUND - 32, mx1 = MX - 22, mx2 = MX + 20, mb = GROUND - y;
-        if (!o.hit && !o.done && ox1 < mx2 && ox2 > mx1 && mb > top) { o.hit = true; hits++; hurt = .9; sfx.bad(); hud(); say.set('아야! 물건이 가까이 오면 <b>스페이스바</b>를 눌러요.'); }
-        if (!o.done && ox2 < mx1) { o.done = true; if (!o.hit) { pass++; sfx.ok(); hud(); speed += 5; if (pass >= GOAL) { c.done(hits <= 1 ? 3 : hits <= 4 ? 2 : 1, `물건 ${GOAL}개를 뛰어넘었어요! (부딪힌 횟수 ${hits}번)`); return false; } } }
+        if (!o.hit && !o.done && ox1 < mx2 && ox2 > mx1 && mb > top) {
+          o.hit = true; hits++; hurt = .9; sfx.bad(); hud();
+          if (hits >= MAXHIT) { draw(); fail(); return false; }
+          say.set(`아야! 하트가 <b>${MAXHIT - hits}개</b> 남았어요. 물건이 가까이 오면 <b>스페이스바</b>!`);
+        }
+        if (!o.done && ox2 < mx1) { o.done = true; if (!o.hit) { pass++; sfx.ok(); hud(); speed += 5; if (pass >= GOAL) { c.done(hits <= 1 ? 3 : hits <= 3 ? 2 : 1, `${Math.floor(T)}초 동안 달려서 물건 ${GOAL}개를 뛰어넘었어요! (아야 ${hits}번${boost ? `, ${boost}번 빨라졌어요` : ''})`); return false; } } }
       }
       obs = obs.filter(o => o.x > -60); hurt = Math.max(0, hurt - dt); draw();
     });
