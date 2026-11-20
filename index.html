@@ -715,7 +715,7 @@ html{scroll-behavior:auto}
 .vhero{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);align-items:center;gap:clamp(12px,3vw,40px);padding-top:clamp(28px,6vw,72px);padding-bottom:clamp(16px,3vw,28px);scroll-margin-top:0}
 .vhero-txt{min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:14px}
 .vbadge{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:999px;background:#fff;font-family:var(--display);font-size:16px;color:#7A55C8;box-shadow:0 3px 0 #E8D8F7}
-.vhero h1{margin:0;font-size:clamp(38px,7.2vw,92px);line-height:1.1;letter-spacing:-.04em;text-wrap:balance;background:linear-gradient(90deg,#FF4F9E,#B06CFF 52%,#4D9BFF);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 4px 0 #fff) drop-shadow(0 8px 14px rgba(176,124,255,.3))}
+.vhero h1{margin:0;font-size:clamp(38px,7.2vw,92px);line-height:1.1;letter-spacing:.06em;text-wrap:balance;background:linear-gradient(90deg,#FF4F9E,#B06CFF 52%,#4D9BFF);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 4px 0 #fff) drop-shadow(0 8px 14px rgba(176,124,255,.3))}
 .vhero p{margin:0;font-size:clamp(16px,2vw,22px);color:#5F4C7E;max-width:34ch}
 .vhero p b{color:#D94A93;font-family:var(--display);font-weight:400}
 .vhero-btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
@@ -730,7 +730,7 @@ html{scroll-behavior:auto}
 .vme{display:grid;grid-template-columns:auto minmax(0,1.3fr) minmax(0,1fr);align-items:center;gap:clamp(12px,2.5vw,28px);margin-top:8px;margin-bottom:12px}
 .vme>*{min-width:0}
 .vme{background:rgba(255,255,255,.88);border:3px solid #fff;border-radius:30px;padding-top:16px;padding-bottom:16px;box-shadow:0 6px 0 #E8D3F8,0 12px 30px rgba(176,124,255,.16);max-width:calc(1240px - 32px);width:calc(100% - 32px)}
-.vme-cat{width:clamp(72px,10vw,108px);height:auto}
+.vme-cat{width:clamp(108px,15vw,162px);height:auto}
 .vme-label{display:block;font-family:var(--display);font-size:15px;color:#9A7BC0;margin-bottom:2px}
 .vme .lvBig{font-size:clamp(22px,2.6vw,28px)}
 .vme .xpbar{margin:8px 0 4px}
@@ -845,6 +845,7 @@ html{scroll-behavior:auto}
 .pianoW .pkey.dn{background:linear-gradient(180deg,color-mix(in srgb,var(--nc) 40%,#fff),color-mix(in srgb,var(--nc) 75%,#fff));box-shadow:inset 0 -2px 0 #DCD3E6;transform:translateY(3px)}
 .pianoW .pkey.next{background:linear-gradient(180deg,#fff,color-mix(in srgb,var(--nc) 45%,#fff));box-shadow:inset 0 -6px 0 var(--nc),inset 0 0 0 3px var(--nc)}
 .pianoW[data-instr="drum"] .pkey b{font-size:clamp(12px,1.8vw,20px)}
+#bgmBtn.off{opacity:.65}
 /* 화면 자판 터치 */
 .kb.touchable .k:not(.sp){cursor:pointer;touch-action:none;-webkit-user-select:none;user-select:none}
 .kb.touchable .k:not(.sp):active{transform:translateY(3px);box-shadow:0 0 0 #AAB4C6;background:#E5DBFF}
@@ -883,7 +884,7 @@ html{scroll-behavior:auto}
   <a href="#town-move" class="vlink" data-sec="town-move" style="--tc:#4FAEF0"><b>2</b>쓱쓱 밀기</a>
   <a href="#town-key" class="vlink" data-sec="town-key" style="--tc:#2FB78E"><b>3</b>키보드</a>
   <a href="#town-han" class="vlink" data-sec="town-han" style="--tc:#9A6CF0"><b>4</b>한글</a>
-  <span class="vnav-r"><span class="pill cheesePill" id="homeCheese" title="내 참치"><i>🐟</i><span>0</span></span><button class="pill" id="soundBtn" type="button" aria-pressed="true">🔊 소리 켜짐</button></span>
+  <span class="vnav-r"><span class="pill cheesePill" id="homeCheese" title="내 참치"><i>🐟</i><span>0</span></span><button class="pill" id="bgmBtn" type="button" aria-pressed="true">🎵 음악 켜짐</button><button class="pill" id="soundBtn" type="button" aria-pressed="true">🔊 소리 켜짐</button></span>
  </div></nav>
 
  <header class="vhero" id="top">
@@ -1029,6 +1030,94 @@ const MUSIC = (() => {
     { id: 'harp', e: '🎼', n: '하프', play(a, f, t, m) { const g = gain(a, m); env(g, t, .002, .5, 1, 1.6); buf(a, pluck(a, f, 2.7, .998, 1), t, g); const g2 = gain(a, m); osc(a, 'sine', f * 2, t, env(g2, t, .004, .035, 0, 1.2), g2); } },
   ];
   return { LIST, play(id, f, i) { if (DATA.mute) return; const a = ac(); if (!a) return; const I = LIST.find(x => x.id === id) || LIST[0]; try { I.play(a, f, a.currentTime + .005, master(a), i); } catch (e) {} } };
+})();
+
+/* ================= 배경음악: 냥코 산책 (직접 만든 곡, 우쿨렐레 팝 느낌, 112 BPM, 16마디 반복) =================
+   비트(북·박수·셰이커 + 튕기는 화음 + 베이스)가 중심이고, 맑게 울리는 글로켄슈필 종소리가 마디마다 한두 번만 살짝. */
+const BGM = (() => {
+  const BPM = 112, S16 = 60 / BPM / 4, STEPS = 16 * 16, VOL = .38;
+  const NN = { C: 0, D: 2, E: 4, F: 5, G: 7, A: 9, B: 11 };
+  const hz = s => { const m = /^([A-G])(\d)$/.exec(s); return 440 * Math.pow(2, (NN[m[1]] + 12 * (+m[2] + 1) - 69) / 12); };
+  // 멜로디: 마디마다 8분음표 8칸. '-' = 늘이기, '.' = 쉬기 → 마디에 종소리 한두 번만
+  const MEL = [
+    'E5 - - - G5 - - -', 'D5 - - - . . . .', 'C5 - - - E5 - - -', 'A4 - - - . . . .',
+    'G5 - - - C6 - - -', 'B5 - - - . G5 - -', 'A5 - - - E5 - - -', 'F5 - - - . . . .',
+    'A5 - - - . . . .', 'G5 - - - . D5 - -', 'B5 - - - . . . .', 'C6 - - - A5 - - -',
+    'F5 - - - . . . .', 'D6 - - - . B5 - -', 'C6 - - - G5 - - -', 'C6 - - - . . . .',
+  ];
+  const CH = { C: ['C4', 'E4', 'G4'], G: ['B3', 'D4', 'G4'], Am: ['C4', 'E4', 'A4'], F: ['C4', 'F4', 'A4'], Em: ['B3', 'E4', 'G4'] };
+  const ROOT = { C: 'C3', G: 'G2', Am: 'A2', F: 'F2', Em: 'E2' };
+  const PROG = ['C', 'G', 'Am', 'F', 'C', 'G', 'Am', 'F', 'F', 'G', 'Em', 'Am', 'F', 'G', 'C', 'C'];
+  const mel = []; MEL.forEach((bar, b) => { const t = bar.split(' '); t.forEach((n, i) => { if (n === '-' || n === '.') return; let len = 1; while (t[i + len] === '-') len++; mel.push({ step: b * 16 + i * 2, f: hz(n), len: len * 2 }); }); });
+  let a = null, bus = null, noise = null, timer = null, step = 0, nextT = 0, playing = false;
+  const nb = () => { if (noise && noise.sampleRate === a.sampleRate) return noise; const b = a.createBuffer(1, a.sampleRate * 2.5, a.sampleRate), d = b.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1; return noise = b; };
+  const voice = (type, f, t, peak, dur, atk = .005, dest = bus) => { const o = a.createOscillator(), g = a.createGain(); o.type = type; o.frequency.value = f; g.gain.setValueAtTime(.0001, t); g.gain.linearRampToValueAtTime(peak, t + atk); g.gain.exponentialRampToValueAtTime(.0001, t + dur); o.connect(g).connect(dest); o.start(t); o.stop(t + dur + .05); };
+  const hiss = (t, dur, peak, type, fq, q = .8) => { const s = a.createBufferSource(), f = a.createBiquadFilter(), g = a.createGain(); s.buffer = nb(); f.type = type; f.frequency.value = fq; f.Q.value = q; g.gain.setValueAtTime(peak, t); g.gain.exponentialRampToValueAtTime(.0001, t + dur); s.connect(f).connect(g).connect(bus); s.start(t, Math.random() * .5); s.stop(t + Math.min(dur + .02, 1.95)); };
+  // 어쿠스틱 드럼 소리 만들기
+  const sweep = (f0, f1, t, peak, dur, k = .12, type = 'sine') => { const o = a.createOscillator(), g = a.createGain(); o.type = type; o.frequency.setValueAtTime(f0, t); o.frequency.exponentialRampToValueAtTime(f1, t + k); g.gain.setValueAtTime(.0001, t); g.gain.linearRampToValueAtTime(peak, t + .003); g.gain.exponentialRampToValueAtTime(.0001, t + dur); o.connect(g).connect(bus); o.start(t); o.stop(t + dur + .05); };
+  const kick = (t, v = 1) => {   // 몸통(낮게 떨어지는 음) + 묵직한 저음 + 비터 '딱'
+    sweep(160, 46, t, .62 * v, .42, .11); sweep(62, 50, t, .3 * v, .36, .2);
+    hiss(t, .014, .14 * v, 'highpass', 2500);
+  };
+  const snare = (t, v = 1) => {  // 북 몸통 + 스네어 줄 '차르르'
+    sweep(200, 165, t, .16 * v, .13, .05, 'triangle'); sweep(330, 300, t, .07 * v, .08, .04);
+    hiss(t, .19, .26 * v, 'bandpass', 2100, .7); hiss(t, .12, .1 * v, 'highpass', 5500);
+  };
+  const tom = (t, f, v = 1) => { sweep(f * 1.5, f, t, .4 * v, .4, .08); hiss(t, .03, .06 * v, 'bandpass', f * 5, 1); };
+  const hat = (t, v, open) => {  // 두 겹의 금속성 노이즈로 두께 있게
+    const d = open ? .42 : .055;
+    hiss(t, d, .085 * v, 'highpass', 6800); hiss(t, d * .8, .06 * v, 'bandpass', 9800, 1.4); hiss(t, d * .6, .03 * v, 'bandpass', 5200, 1.1);
+  };
+  const crash = t => { hiss(t, 1.7, .13, 'highpass', 4200); hiss(t, 1.2, .08, 'bandpass', 7200, .6); hiss(t, .5, .05, 'bandpass', 3200, .8); };
+  const play16 = (s, t) => {
+    const bar = Math.floor(s / 16), pos = s % 16, ch = PROG[bar];
+    // 멜로디: 핸드벨 (둥근 기음 + 종 특유의 12도 배음, 은은하게 길게). 소리는 작게
+    mel.filter(n => n.step === s).forEach(n => {
+      voice('sine', n.f, t, .075, 2.6, .006); voice('sine', n.f * 1.0025, t, .02, 2.2, .006);   // 아주 살짝 어긋나 종처럼 일렁여요
+      voice('sine', n.f * 3, t, .018, 1.1, .004); voice('sine', n.f * 2, t, .008, .8, .004); voice('sine', n.f / 2, t, .01, 1.4, .01);
+    });
+    // 베이스: 1박, 2박 뒤, 3박
+    if (pos === 0 || pos === 6 || pos === 8) voice('triangle', hz(ROOT[ch]), t, pos === 6 ? .19 : .26, .32, .01);
+    if (pos === 12) voice('triangle', hz(ROOT[ch]) * 1.5, t, .16, .22, .01);
+    // 튕기는 화음: 엇박(2·4박 앞뒤)에 톡톡 → 이 곡의 리듬 중심
+    if (pos === 2 || pos === 6 || pos === 10 || pos === 14) CH[ch].forEach((n, i) => voice('triangle', hz(n), t + i * .012, .06, .22, .003));
+    // ---- 어쿠스틱 드럼 ----
+    const sect = bar % 8;                         // 8마디 단위
+    const bigFill = bar === 15 && pos >= 8;       // 16마디 끝: 탐 굴리기
+    const smallFill = sect === 7 && bar !== 15 && pos >= 12;   // 8마디 끝: 짧은 필인
+    const openHat = sect === 3 && pos === 14;     // 8마디마다 한 번 하이햇 살짝 열기
+    // 크래시: 필인 다음 첫 박
+    if (pos === 0 && sect === 0) crash(t);
+    // 킥 (묵직하게)
+    if (!bigFill && (pos === 0 || pos === 8 || (pos === 10 && bar % 2) || (pos === 7 && sect === 5))) kick(t);
+    if (bigFill && (pos === 8 || pos === 12)) kick(t, .8);
+    // 스네어 + 가끔 고스트 노트
+    if (!bigFill && !smallFill && (pos === 4 || pos === 12)) snare(t, 1);
+    if (!bigFill && !smallFill && pos === 15 && bar % 2 === 0) snare(t, .25);
+    if (!bigFill && !smallFill && pos === 7 && bar % 4 === 1) snare(t, .2);
+    // 필인
+    if (smallFill) { if (pos === 12) snare(t, .8); if (pos === 13) snare(t, .55); if (pos === 14) tom(t, 210, .8); if (pos === 15) tom(t, 140, .9); }
+    if (bigFill) { const F = { 8: 230, 9: 230, 10: 180, 11: 180, 12: 135, 13: 135 }; if (F[pos]) tom(t, F[pos], pos % 2 ? .7 : .9); if (pos === 14) snare(t, .9); if (pos === 15) snare(t, 1); }
+    // 하이햇: 8분은 또렷, 사이 16분은 살짝 (필인·오픈 자리엔 쉬기)
+    if (!bigFill && !smallFill) {
+      if (openHat) hat(t, .9, true);
+      else if (!(sect === 3 && pos === 15)) hat(t, pos % 4 === 0 ? .85 : pos % 2 === 0 ? .7 : .35, false);
+    }
+  };
+  const tick = () => { if (!a) return; while (nextT < a.currentTime + .15) { play16(step, nextT); step = (step + 1) % STEPS; nextT += S16; } };
+  const start = () => {
+    a = ac(); if (!a || playing) return;
+    if (!bus) { bus = a.createGain(); bus.gain.value = 0; const c = a.createDynamicsCompressor(); bus.connect(c).connect(a.destination); }
+    bus.gain.cancelScheduledValues(a.currentTime); bus.gain.setValueAtTime(bus.gain.value, a.currentTime); bus.gain.linearRampToValueAtTime(VOL, a.currentTime + 1.2);
+    nextT = a.currentTime + .08; playing = true; timer = setInterval(tick, 25); tick();
+  };
+  const stop = () => {
+    if (!playing) return; playing = false; clearInterval(timer); timer = null;
+    if (bus && a) { bus.gain.cancelScheduledValues(a.currentTime); bus.gain.setValueAtTime(bus.gain.value, a.currentTime); bus.gain.linearRampToValueAtTime(0, a.currentTime + .4); }
+  };
+  // 점검용: 곡 전체를 다른 오디오 장치(오프라인)에 미리 그려 보기
+  const renderTo = (ctx, seconds) => { const sa = a, sb = bus, sn = noise; a = ctx; noise = null; bus = ctx.createGain(); bus.gain.value = VOL; bus.connect(ctx.destination); for (let s = 0, t = .05; t < seconds; s++, t += S16) play16(s % STEPS, t); a = sa; bus = sb; noise = sn; };
+  return { start, stop, renderTo, get playing() { return playing; }, LOOP: STEPS * S16 };
 })();
 const sfx = {
   pop() { tone(520, .12, 'triangle', .22, 0, 1400); tone(1800, .05, 'square', .04, .01); },
@@ -1658,6 +1747,12 @@ const GAMES = [
     render();
   } },
 
+/* ---- 11-2. 바깥 놀이: 모양나라 그림판 (새 탭에서 열려요) ---- */
+{ id: 'moyang', town: 'move', title: '모양나라 그림판', skill: '도형 끌어 꾸미기', color: 'var(--sky)', r: 1.2, isNew: true,
+  link: 'https://presehankm.github.io/moyangnara/',
+  desc: '동그라미·세모·네모를 넣고, 손가락으로 끌어 옮기고 색칠해서 나만의 모양 그림을 꾸며요.',
+  how: ['도형을 넣고 손가락으로 쓱 끌어 옮겨요.'] },
+
 /* ---- 12. keys: explorer ---- */
 { id: 'explore', town: 'key', title: '키보드 탐험', skill: '특수 키', color: 'var(--lime)', r: -1.2, keys: true,
   desc: '키를 눌러 보면 냥냥이가 키 이름과 하는 일을 알려 줘요.',
@@ -1978,10 +2073,11 @@ const GAMES = [
     let t0 = performance.now(), now = 0, perfect = 0, good = 0, miss = 0, combo = 0, best = 0; const fx = [];
     const judged = () => perfect + good + miss, acc = () => judged() ? (perfect + good * .6) / judged() : 1;
     const hud = () => c.hud(chip('🎵', `${judged()} / ${TOTAL}`) + chip('✨', `콤보 ${combo}`) + chip('🎯', `${Math.round(acc() * 100)}%`)); hud();
-    // 소리 없이 빛으로만: 누르면 번쩍, 놓치면 빨간 표시
+    // 누르면 피아노 소리 + 번쩍. 못 누르고 지나간 음표는 소리 없이 빨간 표시(실패)
     function press(i) {
       if (!c.alive) return;
       const k = keys[i]; k.classList.remove('dn', 'tmiss'); void k.offsetWidth; k.classList.add('dn'); setTimeout(() => k.classList.remove('dn'), 150);
+      MUSIC.play('piano', LANES[i].f, 0);
       fx.push({ type: 'tap', lane: i, t: now });
       let hit = null, d = 9; for (const n of notes) { if (n.state || n.lane !== i) continue; const dd = Math.abs(n.t - now); if (dd < d) { d = dd; hit = n; } if (n.t - now > GOOD) break; }
       if (!hit || d > GOOD) return;
@@ -2948,14 +3044,17 @@ function renderHome() {
   document.querySelectorAll('.cards').forEach(box => {
     box.innerHTML = '';
     GAMES.filter(g => g.town === box.dataset.town).forEach(g => {
-      const st = stOf(g.id), lvHTML = g.levels
+      const st = stOf(g.id), lvHTML = g.link ? '<span>↗ 새 창에서 열려요</span>' : g.levels
         ? g.levels.map((l, i) => unlocked(g, i) ? `<span>${i + 1}단계 <b>${'★'.repeat(st[i])}${'☆'.repeat(3 - st[i])}</b></span>` : `<span class="lock">🔒 ${i + 1}단계</span>`).join('')
         : `<span>${st[0] ? `깼어요 <b>${'★'.repeat(st[0])}${'☆'.repeat(3 - st[0])}</b>` : '아직 안 했어요'}</span>`;
       const b = el('button', 'card', `<span class="art">${artOf(g)}<span class="cno">${GAMES.indexOf(g) + 1}</span></span>${g.isNew && !st[0] ? '<span class="new">NEW</span>' : ''}
         <span class="cbody"><span class="skill">${g.skill}</span><span class="cname">${g.title}</span><span class="cdesc">${g.desc}</span><span class="lvs">${lvHTML}</span></span>
         <span class="spark s1" aria-hidden="true">✦</span><span class="spark s2" aria-hidden="true">✧</span><span class="spark s3" aria-hidden="true">✦</span><span class="spark s4" aria-hidden="true">♡</span>`);
       b.type = 'button'; b.style.setProperty('--c', g.color); b.style.setProperty('--r', g.r + 'deg');
-      b.addEventListener('click', () => { ac(); openGame(g.id); });
+      if (g.link) {   // 바깥 놀이: 냥코놀이터는 그대로 두고 새 탭으로
+        b.setAttribute('aria-label', `${g.title} (새 창에서 열려요)`);
+        b.addEventListener('click', () => { const w = window.open(g.link, '_blank', 'noopener'); if (!w) location.href = g.link; });
+      } else b.addEventListener('click', () => { ac(); openGame(g.id); });
       box.append(b);
     });
   });
@@ -3020,6 +3119,26 @@ renderHome();
 })();
 </script>
 <script>
+/* 배경음악 켜고 끄기: 첫 터치/키 입력 뒤부터 재생 (브라우저 규칙), 연주 놀이에서는 쉬어요 */
+(() => {
+  const btn = document.getElementById('bgmBtn'), QUIET = new Set(['piano', 'tiles']);
+  let unlocked = false;
+  const paint = () => { const on = DATA.bgm !== false && !DATA.mute; btn.textContent = DATA.bgm === false ? '🎵 음악 꺼짐' : '🎵 음악 켜짐'; btn.setAttribute('aria-pressed', String(DATA.bgm !== false)); btn.classList.toggle('off', !on); };
+  const sync = () => {
+    paint();
+    const inQuietGame = !stage.hidden && curGame && QUIET.has(curGame.id);
+    const want = unlocked && DATA.bgm !== false && !DATA.mute && document.visibilityState === 'visible' && !inQuietGame;
+    if (want && !BGM.playing) BGM.start(); else if (!want && BGM.playing) BGM.stop();
+  };
+  btn.addEventListener('click', () => { DATA.bgm = DATA.bgm === false; persist(); unlocked = true; sync(); });
+  const unlock = () => { if (unlocked) return; unlocked = true; ac(); sync(); };
+  ['pointerdown', 'keydown'].forEach(t => document.addEventListener(t, unlock, { capture: true, passive: true }));
+  document.addEventListener('visibilitychange', sync);
+  document.getElementById('soundBtn').addEventListener('click', () => setTimeout(sync, 0));
+  setInterval(sync, 400);   // 놀이에 들어가고 나올 때 맞춰 켜고 꺼요
+  paint();
+})();
+
 /* 테마별 세로 페이지: 마을 바로가기, 현재 마을 표시, 가까이 가면 반짝 */
 (() => {
   const nav = document.querySelector('.vnav'), links = [...document.querySelectorAll('.vlink')];
