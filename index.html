@@ -846,6 +846,13 @@ html{scroll-behavior:auto}
 .pianoW .pkey.next{background:linear-gradient(180deg,#fff,color-mix(in srgb,var(--nc) 45%,#fff));box-shadow:inset 0 -6px 0 var(--nc),inset 0 0 0 3px var(--nc)}
 .pianoW[data-instr="drum"] .pkey b{font-size:clamp(12px,1.8vw,20px)}
 #bgmBtn.off{opacity:.65}
+/* 바깥 놀이 액자 */
+.extFrame{display:block;width:100%;height:max(480px,calc(100vh - 170px));border:0;border-radius:16px;background:#fff;box-shadow:inset 0 0 0 2px #EEE4FA}
+.extTip{font-size:15px;color:var(--ink2);padding:2px 4px}
+.extTip b{font-family:var(--display);font-weight:400;color:#6A4BE0}
+.chip.extOpen{text-decoration:none;font-size:15px}
+.sbody:has(.extFrame){padding:10px;gap:8px}
+.back{font-size:clamp(17px,2vw,20px)}
 /* 화면 자판 터치 */
 .kb.touchable .k:not(.sp){cursor:pointer;touch-action:none;-webkit-user-select:none;user-select:none}
 .kb.touchable .k:not(.sp):active{transform:translateY(3px);box-shadow:0 0 0 #AAB4C6;background:#E5DBFF}
@@ -2149,6 +2156,13 @@ const GAMES = [
     });
   } },
 
+/* ---- 15-3. 바깥 놀이: 강치와 독도 (새 탭에서 열려요) ---- */
+{ id: 'dokdo', town: 'key', title: '강치와 독도', skill: '방향키 탐험', color: 'var(--rain)', r: -1, isNew: true,
+  link: 'https://dokdoday.firebaseapp.com/game',
+  desc: '방향키로 강치를 움직여 독도 바다를 헤엄쳐요. 태블릿은 화면의 「움직이기」 동그라미를 손가락으로 끌어요.',
+  tip: '태블릿에서는 왼쪽 아래 <b>「움직이기」</b> 동그라미를 손가락으로 끌어서 강치를 움직여요.',
+  how: ['방향키로 강치를 움직여 독도를 탐험해요.'] },
+
 /* ---- 16. hangul: key positions ---- */
 { id: 'keys', town: 'han', title: '자판 자리 익히기', skill: '두벌식 자판', color: 'var(--teal)', r: 1.1, keys: true,
   desc: '반짝이는 키를 찾아 눌러요. 손가락 색을 따라가요.',
@@ -2975,7 +2989,20 @@ function finish(g, lv, stars, msg) {
   $('#homeBtn').addEventListener('click', goHome);
   const nb = $('#nextBtn'); if (nb) nb.addEventListener('click', () => runGame(g, lv + 1));
 }
-function goHome() { stopGame(); overlay.hidden = true; stage.hidden = true; home.hidden = false; renderHome(); const tw = curGame && document.getElementById('town-' + curGame.town); if (tw) tw.scrollIntoView({ block: 'start' }); else window.scrollTo(0, 0); }
+/* 바깥 놀이(다른 사이트)를 놀이터 화면 안 액자에 띄워요. 위쪽 "← 놀이터로" 버튼으로 언제든 돌아와요 */
+function openLink(g) {
+  stopGame(); curGame = g; overlay.hidden = true;
+  home.hidden = true; stage.hidden = false; window.scrollTo(0, 0); paintCheese();
+  $('#sTitle').textContent = g.title; $('#sSkill').textContent = g.skill; $('#sLv').hidden = true;
+  hudEl.innerHTML = `<a class="chip extOpen" href="${g.link}" target="_blank" rel="noopener">↗ 새 창으로 크게</a>`;
+  sBody.innerHTML = '';
+  const tip = el('div', 'extTip', `🐾 다 놀았으면 위쪽 <b>← 놀이터로</b> 버튼을 눌러 돌아와요.${g.tip ? ' ' + g.tip : ''}`);
+  const fr = el('iframe', 'extFrame'); fr.src = g.link; fr.title = g.title;
+  fr.setAttribute('allow', 'fullscreen; autoplay; gamepad; clipboard-write');
+  fr.addEventListener('load', () => { try { fr.focus(); } catch (e) {} });   // 바로 방향키가 먹도록
+  sBody.append(tip, fr);
+}
+function goHome() { stopGame(); if (sBody.querySelector('iframe.extFrame')) sBody.innerHTML = ''; overlay.hidden = true; stage.hidden = true; home.hidden = false; renderHome(); const tw = curGame && document.getElementById('town-' + curGame.town); if (tw) tw.scrollIntoView({ block: 'start' }); else window.scrollTo(0, 0); }
 $('#backBtn').addEventListener('click', goHome);
 
 /* ================= gacha & dex ================= */
@@ -3044,17 +3071,15 @@ function renderHome() {
   document.querySelectorAll('.cards').forEach(box => {
     box.innerHTML = '';
     GAMES.filter(g => g.town === box.dataset.town).forEach(g => {
-      const st = stOf(g.id), lvHTML = g.link ? '<span>↗ 새 창에서 열려요</span>' : g.levels
+      const st = stOf(g.id), lvHTML = g.link ? '<span>🌐 바깥 놀이 · 놀이터 안에서 열려요</span>' : g.levels
         ? g.levels.map((l, i) => unlocked(g, i) ? `<span>${i + 1}단계 <b>${'★'.repeat(st[i])}${'☆'.repeat(3 - st[i])}</b></span>` : `<span class="lock">🔒 ${i + 1}단계</span>`).join('')
         : `<span>${st[0] ? `깼어요 <b>${'★'.repeat(st[0])}${'☆'.repeat(3 - st[0])}</b>` : '아직 안 했어요'}</span>`;
       const b = el('button', 'card', `<span class="art">${artOf(g)}<span class="cno">${GAMES.indexOf(g) + 1}</span></span>${g.isNew && !st[0] ? '<span class="new">NEW</span>' : ''}
         <span class="cbody"><span class="skill">${g.skill}</span><span class="cname">${g.title}</span><span class="cdesc">${g.desc}</span><span class="lvs">${lvHTML}</span></span>
         <span class="spark s1" aria-hidden="true">✦</span><span class="spark s2" aria-hidden="true">✧</span><span class="spark s3" aria-hidden="true">✦</span><span class="spark s4" aria-hidden="true">♡</span>`);
       b.type = 'button'; b.style.setProperty('--c', g.color); b.style.setProperty('--r', g.r + 'deg');
-      if (g.link) {   // 바깥 놀이: 냥코놀이터는 그대로 두고 새 탭으로
-        b.setAttribute('aria-label', `${g.title} (새 창에서 열려요)`);
-        b.addEventListener('click', () => { const w = window.open(g.link, '_blank', 'noopener'); if (!w) location.href = g.link; });
-      } else b.addEventListener('click', () => { ac(); openGame(g.id); });
+      if (g.link) b.addEventListener('click', () => { ac(); openLink(g); });   // 바깥 놀이도 놀이터 화면 안에서 (← 놀이터로 버튼 그대로)
+      else b.addEventListener('click', () => { ac(); openGame(g.id); });
       box.append(b);
     });
   });
@@ -3126,7 +3151,7 @@ renderHome();
   const paint = () => { const on = DATA.bgm !== false && !DATA.mute; btn.textContent = DATA.bgm === false ? '🎵 음악 꺼짐' : '🎵 음악 켜짐'; btn.setAttribute('aria-pressed', String(DATA.bgm !== false)); btn.classList.toggle('off', !on); };
   const sync = () => {
     paint();
-    const inQuietGame = !stage.hidden && curGame && QUIET.has(curGame.id);
+    const inQuietGame = !stage.hidden && curGame && (QUIET.has(curGame.id) || curGame.link);   // 바깥 놀이도 그 사이트 소리가 있으니 쉬어요
     const want = unlocked && DATA.bgm !== false && !DATA.mute && document.visibilityState === 'visible' && !inQuietGame;
     if (want && !BGM.playing) BGM.start(); else if (!want && BGM.playing) BGM.stop();
   };
